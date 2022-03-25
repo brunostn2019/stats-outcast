@@ -53,6 +53,10 @@
               "target": "Package",
               "version": "[3.13.0, )"
             },
+            "ScrapySharp": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "System.Data.SQLite": {
               "target": "Package",
               "version": "[1.0.115.5, )"

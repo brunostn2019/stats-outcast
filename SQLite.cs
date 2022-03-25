@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HtmlAgilityPack;
+using ScrapySharp.Extensions;
+using ScrapySharp.Network;
+using System.IO;
+using System.Globalization;
+using StatsOutcast.Models;
 
 namespace StatsOutcast
 {
     public class SQLite
     {
-            private static SQLiteConnection sqlite_conn;
+        static ScrapingBrowser _browser = new ScrapingBrowser();
+        private static SQLiteConnection sqlite_conn;
         public static void Configurar()
         {
             sqlite_conn = CreateConnection();
-            CreateTable(sqlite_conn);
-            InsertData(sqlite_conn);
+            //CreateTable(sqlite_conn);
+            ProcessarLootPage1("https://outcastserver.com/loot.php");
+          
+
             //ReadData(sqlite_conn);
         }
         public static SQLiteConnection CreateConnection()
@@ -26,6 +36,7 @@ namespace StatsOutcast
             try
             {
                 sqlite_conn.Open();
+                sqlite_conn.Close();
             }
             catch (Exception ex)
             {
@@ -38,50 +49,113 @@ namespace StatsOutcast
         {
 
             SQLiteCommand sqlite_cmd;
-            string Createsql = "CREATE  TABLE IF NOT EXISTS SampleTable               (Col1 VARCHAR(20), Col2 INT)";
-            string Createsql1 = "CREATE  TABLE IF NOT EXISTS SampleTable1            (Col1 VARCHAR(20), Col2 INT)";
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = Createsql;
-            sqlite_cmd.ExecuteNonQuery();
+    
+            string Createsql1 = "CREATE  TABLE IF NOT EXISTS LootLog            (Data VARCHAR(40), Boss VARCHAR(100), Item VARCHAR(255))";
+            sqlite_cmd = conn.CreateCommand();     
             sqlite_cmd.CommandText = Createsql1;
+            sqlite_conn.Open();
             sqlite_cmd.ExecuteNonQuery();
-
+            sqlite_conn.Close();
+          //  sqlite_cmd = new SQLiteCommand("DELETE FROM LootLog", conn);
+           // sqlite_cmd.ExecuteNonQuery();
         }
 
-        static void InsertData(SQLiteConnection conn)
+        static int InsertData(SQLiteConnection conn,string data, string boss, string item,string lootCompleto)
         {
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable               (Col1, Col2) VALUES('Test Text ', 1); ";
-            sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable               (Col1, Col2) VALUES('Test1 Text1 ', 2); ";
-            sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable               (Col1, Col2) VALUES('Test2 Text2 ', 3); ";
-            sqlite_cmd.ExecuteNonQuery();
+            int result = 0;
+            SQLiteCommand sqlite_cmd = new SQLiteCommand(@"INSERT INTO LootLog2 (Data, Boss,Item,LootCompleto) 
+                                                            SELECT @DATA, @BOSS,@ITEM,@Loot
+                                                            WHERE NOT EXISTS(SELECT 1 FROM LootLog2 WHERE LootCompleto = @Loot)", conn);
 
-
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable1               (Col1, Col2) VALUES('Test3 Text3 ', 3); ";
-            sqlite_cmd.ExecuteNonQuery();
-
+            sqlite_cmd.CommandType = System.Data.CommandType.Text;
+            sqlite_cmd.Parameters.AddWithValue("DATA",data);
+            sqlite_cmd.Parameters.AddWithValue("BOSS", boss);
+            sqlite_cmd.Parameters.AddWithValue("ITEM", item);
+            sqlite_cmd.Parameters.AddWithValue("Loot", lootCompleto);
+            sqlite_conn.Open();
+           result= sqlite_cmd.ExecuteNonQuery();       
+            sqlite_conn.Close();
+            return result;
         }
 
         public static string ReadData()
         {
+            List<LootModel> listaLoot = new List<LootModel>();
             sqlite_conn = CreateConnection();
             string myreader=string.Empty;
             SQLiteDataReader sqlite_datareader;
             SQLiteCommand sqlite_cmd;
             sqlite_cmd = sqlite_conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT * FROM SampleTable";
-
+            sqlite_cmd.CommandText = "SELECT * FROM LootLog2";
+            sqlite_conn.Open();
+           
             sqlite_datareader = sqlite_cmd.ExecuteReader();
             while (sqlite_datareader.Read())
             {
-                 myreader = sqlite_datareader.GetString(0);
-                //Console.WriteLine(myreader);
+                LootModel loot = new LootModel();
+                loot.Data = DateTime.ParseExact(sqlite_datareader["Data"].ToString(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+                loot.Boss = sqlite_datareader["Boss"].ToString();
+                loot.Item = sqlite_datareader["Item"].ToString();
+                loot.lootCompleto = sqlite_datareader["LootCompleto"].ToString();
+
+                myreader = $"{sqlite_datareader["Data"]} {sqlite_datareader["Boss"]} {sqlite_datareader["Item"]}";
+               
+                listaLoot.Add(loot);
             }
             sqlite_conn.Close();
             return myreader;
+        }
+
+        private static void ProcessarLootPage1(string pagina)
+        {
+            var lootPage = GetHtml(pagina);
+            string divContent = lootPage.SelectSingleNode("//div[@class='content_txt']").InnerText;
+            string data;
+            string loot;
+            string lootCompleto;
+            string boss;
+            string linhaFormatada;
+            int result = 0;
+
+
+            divContent = divContent.Replace("Latest Rare Item Drops by Boss Monsters", "");
+            divContent = divContent.Replace("Loot Log Page 1", "");
+            divContent = divContent.Replace("Loot Log Page 2", "");
+            divContent = divContent.Replace("Loot Log Page 3", "");
+            divContent = divContent.Replace("It is brand new.", "");
+            divContent = divContent.Replace("It's an \"Rune of Homestead\" spell (1x)", "Rune of Homestead");
+            divContent = divContent.Replace("It has 50 charges left.", "");
+            divContent = divContent.Replace("It has 5 charges left.", "");
+            divContent = divContent.Replace("\r", " ");
+            divContent = divContent.Replace("\n", " ");
+            divContent = Regex.Replace(divContent, @"\s+", " ").Trim();
+
+            var linhas = divContent.Split("Date:");
+            List<String> listaLinhas = linhas.ToList();
+            listaLinhas.RemoveAt(0);
+
+            foreach (var item in listaLinhas)
+            {
+                linhaFormatada = item.Trim();
+                data = linhaFormatada.Substring(0, 16).Trim();
+                boss = linhaFormatada.Substring(17, linhaFormatada.IndexOf("'s") - 17);
+                loot = linhaFormatada.Substring(linhaFormatada.IndexOf("Loot:"));
+
+                loot = loot.Replace("Loot: an ", "");
+                loot = loot.Replace("Loot: a ", "");
+                loot = loot.Replace("Loot: ", "");
+                loot = loot.Replace(loot.Substring(loot.IndexOf(".")), "");
+                lootCompleto = $"{data} {boss} {loot}";
+               result= InsertData(sqlite_conn, data, boss, loot, lootCompleto);
+                if (result == 0) 
+                break;
+            }
+        }
+
+        static HtmlNode GetHtml(string url)
+        {
+            WebPage webpage = _browser.NavigateToPage(new Uri(url));
+            return webpage.Html;
         }
     }
 }
