@@ -10,6 +10,8 @@ namespace StatsOutcast.Models
         public DateTime Data { get; set; }
         public String Boss { get; set; }
         public String Item { get; set; }
-        public String lootCompleto { get; set; }
+        public String LootCompleto { get; set; }
+
+        public int Quantidade { get; set; }
     }
 }
