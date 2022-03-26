@@ -60,6 +60,10 @@
             "System.Data.SQLite": {
               "target": "Package",
               "version": "[1.0.115.5, )"
+            },
+            "jquery.datatables": {
+              "target": "Package",
+              "version": "[1.10.15, )"
             }
           },
           "imports": [

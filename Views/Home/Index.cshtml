@@ -1,14 +1,52 @@
-﻿@model ModelDados
+﻿@model List<LootModel>
 @{
     ViewData["Title"] = "Home Page";
 }
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
 <div class="text-center">
     <h1 class="display-4">Outcast Server Stats</h1>
-  
-    
-         <p>@Model.dado</p> 
-        
-  
- 
+
+
+    <table id="tabelaLoot" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th class="nosort">Date</th>
+                <th>Item</th>
+                <th>Boss</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @{ 
+                int contador = Model.Count;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@contador</td>
+                        <td>@item.Data</td>
+                        <td>@item.Item</td>
+                        <td>@item.Boss</td>
+                    </tr>
+                    contador--;
+                }
+            }
+        </tbody>
+        <tfoot>
+
+        </tfoot>
+    </table>
+
+
 </div>
+
+@section Scripts{
+    <!-- JS -->
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript">
+       
+               
+    </script>
+}

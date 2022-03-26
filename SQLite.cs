@@ -21,8 +21,8 @@ namespace StatsOutcast
         {
             sqlite_conn = CreateConnection();
             //CreateTable(sqlite_conn);
-            int teste =BuscarQuantidadePorItem("The Roc Head");
-            ProcessarLootPage("https://outcastserver.com/loot.php");
+            //int teste =BuscarQuantidadePorItem("The Roc Head");
+            //ProcessarLootPage("https://outcastserver.com/loot.php");
 
 
             //ReadData(sqlite_conn);
@@ -158,7 +158,33 @@ namespace StatsOutcast
             WebPage webpage = _browser.NavigateToPage(new Uri(url));
             return webpage.Html;
         }
+        public static List<LootModel> BuscarLoots()
+        {
+            List<LootModel> loots = new List<LootModel>();
 
+            sqlite_conn = CreateConnection();
+
+            SQLiteDataReader sqlite_datareader;
+            SQLiteCommand sqlite_cmd;
+            sqlite_cmd = sqlite_conn.CreateCommand();
+            sqlite_cmd.CommandText = "SELECT Item, Boss,Data FROM LootLog2";
+            
+            sqlite_conn.Open();
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader();
+            while (sqlite_datareader.Read())
+            {
+                LootModel loot = new LootModel();
+
+                loot.Item = sqlite_datareader["Item"].ToString();
+                loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
+                loot.Boss = sqlite_datareader["boss"].ToString();
+                loots.Add(loot);
+            }
+            sqlite_conn.Close();
+            loots= loots.OrderByDescending(a => a.Data).ToList();
+            return loots;
+        }
         public static int BuscarQuantidadePorItem(string nomeItem)
         {
             LootModel loot = new LootModel();

@@ -22,9 +22,8 @@ namespace StatsOutcast.Controllers
 
         public IActionResult Index()
         {
-            ModelDados resultado = new ModelDados();
-              resultado.dado=  SQLite.ReadData();
-            return View(resultado);
+            List<LootModel> loots = SQLite.BuscarLoots();
+            return View(loots);
         }
 
         public IActionResult Privacy()
