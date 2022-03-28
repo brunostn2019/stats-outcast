@@ -19,11 +19,20 @@ namespace StatsOutcast
         private static SQLiteConnection sqlite_conn;
         public static void Configurar()
         {
-            sqlite_conn = CreateConnection();
-            //CreateTable(sqlite_conn);
-            //int teste =BuscarQuantidadePorItem("The Roc Head");
-            //ProcessarLootPage("https://outcastserver.com/loot.php");
+            try
+            {
 
+                sqlite_conn = CreateConnection();
+                //CreateTable(sqlite_conn);
+                //int teste =BuscarQuantidadePorItem("The Roc Head");
+                //ProcessarLootPage("https://outcastserver.com/loot.php");
+
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
 
             //ReadData(sqlite_conn);
         }
@@ -160,54 +169,74 @@ namespace StatsOutcast
         }
         public static List<LootModel> BuscarLoots()
         {
-            List<LootModel> loots = new List<LootModel>();
-
-            sqlite_conn = CreateConnection();
-
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT Item, Boss,Data FROM LootLog2";
-            
-            sqlite_conn.Open();
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            try
             {
-                LootModel loot = new LootModel();
 
-                loot.Item = sqlite_datareader["Item"].ToString();
-                loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
-                loot.Boss = sqlite_datareader["boss"].ToString();
-                loots.Add(loot);
+
+                List<LootModel> loots = new List<LootModel>();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Item, Boss,Data FROM LootLog2";
+
+                sqlite_conn.Open();
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    LootModel loot = new LootModel();
+
+                    loot.Item = sqlite_datareader["Item"].ToString();
+                    loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
+                    loot.Boss = sqlite_datareader["boss"].ToString();
+                    loots.Add(loot);
+                }
+                sqlite_conn.Close();
+                loots = loots.OrderByDescending(a => a.Data).ToList();
+                return loots;
             }
-            sqlite_conn.Close();
-            loots= loots.OrderByDescending(a => a.Data).ToList();
-            return loots;
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
         }
         public static int BuscarQuantidadePorItem(string nomeItem)
         {
-            LootModel loot = new LootModel();
-
-            sqlite_conn = CreateConnection();
-
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = sqlite_conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2 WHERE Item = @ITEM GROUP BY Item";
-            sqlite_cmd.Parameters.AddWithValue("ITEM", nomeItem);
-            sqlite_conn.Open();
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            try
             {
-                loot = new LootModel();
 
-                loot.Item = sqlite_datareader["Item"].ToString();
-                loot.Quantidade = Int32.Parse(sqlite_datareader["QTD"].ToString());
+
+                LootModel loot = new LootModel();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2 WHERE Item = @ITEM GROUP BY Item";
+                sqlite_cmd.Parameters.AddWithValue("ITEM", nomeItem);
+                sqlite_conn.Open();
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    loot = new LootModel();
+
+                    loot.Item = sqlite_datareader["Item"].ToString();
+                    loot.Quantidade = Int32.Parse(sqlite_datareader["QTD"].ToString());
+                }
+                sqlite_conn.Close();
+                return loot.Quantidade;
             }
-            sqlite_conn.Close();
-            return loot.Quantidade;
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
         }
     }
 }
