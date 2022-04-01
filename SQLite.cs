@@ -25,7 +25,7 @@ namespace StatsOutcast
                 sqlite_conn = CreateConnection();
                 //CreateTable(sqlite_conn);
                 //int teste =BuscarQuantidadePorItem("The Roc Head");
-                //ProcessarLootPage("https://outcastserver.com/loot.php");
+                ProcessarLootPage("https://outcastserver.com/loot.php");
 
             }
             catch (Exception e)
