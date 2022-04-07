@@ -16,6 +16,47 @@ namespace StatsOutcast
     public class SQLite
     {
         static ScrapingBrowser _browser = new ScrapingBrowser();
+
+        internal static List<LootModel> BuscarLootsPorBoss(string nomeBoss)
+        {
+            try
+            {
+
+
+                List<LootModel> loots = new List<LootModel>();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Item, Boss, Data, Count(Item) qtd FROM LootLog2 where Boss=@BOSS group by Item";
+
+                sqlite_conn.Open();
+                sqlite_cmd.Parameters.AddWithValue("BOSS", nomeBoss);
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    LootModel loot = new LootModel();
+
+                    loot.Item = sqlite_datareader["Item"].ToString();
+                    loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
+                    loot.Boss = sqlite_datareader["boss"].ToString();
+                    loot.Quantidade = Int32.Parse( sqlite_datareader["qtd"].ToString());
+                    loots.Add(loot);
+                }
+                sqlite_conn.Close();
+                loots = loots.OrderByDescending(a => a.Data).ToList();
+                return loots;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
         private static SQLiteConnection sqlite_conn;
         public static void Configurar()
         {

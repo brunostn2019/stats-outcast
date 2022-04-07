@@ -1,36 +1,37 @@
 ﻿@model List<LootModel>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Bosses";
 }
+
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
 <div class="text-center">
-    <h1 class="display-4">Outcast Server Stats</h1>
+    <h1 class="display-4">@Model[0].Boss Stats</h1>
 
 
-    <table id="tabelaLoot" class="table table-bordered table-hover display compact">
+    <table id="tabelaLootsBoss" class="table table-bordered table-hover display compact" >
         <thead>
             <tr>
                 <th>Id</th>
                 <th class="nosort">Date</th>
                 <th>Item</th>
-                <th>Boss</th>
+                <th>Quantity</th>
             </tr>
         </thead>
         <tbody>
-            
-            @{ 
+
+            @{
                 int contador = Model.Count;
                 foreach (var item in Model)
                 {
-                        <tr>
-                            <td>@contador</td>
-                            <td>@item.Data</td>
-                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                            <td><a asp-action="Item" asp-controller="loot">@item.Item</a></td>
-                            <td><a asp-action="Boss" asp-controller="loot" asp-route-bossName="@item.Boss">@item.Boss</a></td>
-                           
-                        </tr>
+                    <tr>
+                        <td>@contador</td>
+                        <td>@item.Data</td>
+                        @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+                        <td><a asp-action="Boss" asp-controller="loot">@item.Item</a></td>
+
+                        <td>@item.Quantidade</td>
+                    </tr>
                     contador--;
                 }
             }

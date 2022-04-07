@@ -9,7 +9,26 @@ $(document).ready(function () {
             'bSortable': false,
             'aTargets': ['nosort']
         }],        
-        "order": []
+        "order": [],
+        "processing": true,
+        "dom": 'lrtip',
+        "oLanguage": {
+            
+        }
+    });
+   
+});$(document).ready(function () {
+    $('#tabelaLootsBoss').DataTable({
+
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],        
+        "order": [],
+        "processing": true,
+        "oLanguage": {
+            'sLoadingRecords': '<img src="~/Content/Stalker.gif">'
+        }
     });
    
 });

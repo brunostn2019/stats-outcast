@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StatsOutcast.BLL;
 using StatsOutcast.Models;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,17 @@ namespace StatsOutcast.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly SQLite sql;
+        private readonly LootBLL _bll;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            sql = new SQLite();
+            _bll = new LootBLL();
         }
 
         public IActionResult Index()
         {
-            List<LootModel> loots = SQLite.BuscarLoots();
+            List<LootModel> loots = _bll.BuscarLoots();
             return View(loots);
         }
 
