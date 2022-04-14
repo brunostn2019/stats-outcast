@@ -12,10 +12,26 @@ namespace StatsOutcast.BLL
         {
             return SQLite.BuscarLoots();
         }
-          internal List<LootModel> BuscarLootsPorBoss(string nomeBoss)
+        internal ListasModel BuscarListasLoots()
+        {
+            ListasModel Listas = new ListasModel();
+            Listas.Loots=             SQLite.BuscarLoots();
+            Listas.LootsMaisRaros = SQLite.BuscarItemEQuantidade();
+
+            return Listas;
+        }
+
+        //private List<LootModel> FiltrarLootsRaros(List<LootModel> loots)
+        //{
+        //   List<LootModel> LootsMaisRaros = loots.OrderBy(a=>a.)
+        //}
+
+        internal List<LootModel> BuscarLootsPorBoss(string nomeBoss)
         {
             return SQLite.BuscarLootsPorBoss(nomeBoss);
         }
+
+       
 
 
     }

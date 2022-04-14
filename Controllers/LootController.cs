@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StatsOutcast.BLL;
 using StatsOutcast.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
 namespace StatsOutcast.Controllers
 {
     public class LootController : Controller
@@ -21,5 +17,13 @@ namespace StatsOutcast.Controllers
             List<LootModel> loots = _bll.BuscarLootsPorBoss(bossName);
             return View(loots);
         }
+        public IActionResult Grafico(string bossName)
+        {
+            List<LootModel> loots = _bll.BuscarLootsPorBoss(bossName);
+            loots = loots.OrderBy(s => s.Quantidade).Take(10).ToList();
+         
+            return View(loots);
+        }
+      
     }
 }

@@ -25,10 +25,14 @@
     ".NETCoreApp,Version=v5.0": {
       "StatsOutcast/1.0.0": {
         "dependencies": {
+          "ChartJS": "21.2.6",
+          "DevExtreme.AspNet.Data": "2.8.6",
+          "DevExtreme.Web": "21.2.6",
           "Microsoft.Data.Sqlite.Core": "6.0.3",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "5.0.2",
           "SQLite": "3.13.0",
           "ScrapySharp": "3.0.0",
+          "Syncfusion.EJ2.AspNet.Core": "20.1.0.47",
           "System.Data.SQLite": "1.0.115.5",
           "jquery.datatables": "1.10.15",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
@@ -322,6 +326,35 @@
           "StatsOutcast.dll": {}
         }
       },
+      "ChartJS/21.2.6": {
+        "dependencies": {
+          "jQuery": "3.5.1",
+          "jquery-globalize": "1.1.1"
+        }
+      },
+      "cldrjs/0.4.4": {},
+      "DevExtreme.AspNet.Data/2.8.6": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DevExtreme.AspNet.Data.dll": {
+            "assemblyVersion": "2.8.6.0",
+            "fileVersion": "2.8.6.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/DevExtreme.AspNet.Data.dll": {}
+        }
+      },
+      "DevExtreme.Web/21.2.6": {
+        "dependencies": {
+          "JSZip": "3.1.2",
+          "jQuery": "3.5.1",
+          "jquery-globalize": "1.1.1"
+        }
+      },
       "EntityFramework/6.4.4": {
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
@@ -428,12 +461,18 @@
           }
         }
       },
-      "jQuery/1.7.0": {},
-      "jquery.datatables/1.10.15": {
+      "jQuery/3.5.1": {},
+      "jquery-globalize/1.1.1": {
         "dependencies": {
-          "jQuery": "1.7.0"
+          "cldrjs": "0.4.4"
         }
       },
+      "jquery.datatables/1.10.15": {
+        "dependencies": {
+          "jQuery": "3.5.1"
+        }
+      },
+      "JSZip/3.1.2": {},
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "dependencies": {
           "System.Text.Encodings.Web": "4.5.0"
@@ -1126,6 +1165,32 @@
         },
         "compile": {
           "lib/netstandard2.1/System.Data.SQLite.dll": {}
+        }
+      },
+      "Syncfusion.EJ2.AspNet.Core/20.1.0.47": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2",
+          "Syncfusion.Licensing": "20.1.0.47"
+        },
+        "runtime": {
+          "lib/netstandard2.1/Syncfusion.EJ2.dll": {
+            "assemblyVersion": "20.1.0.47",
+            "fileVersion": "20.1.0.47"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.1/Syncfusion.EJ2.dll": {}
+        }
+      },
+      "Syncfusion.Licensing/20.1.0.47": {
+        "runtime": {
+          "lib/net5.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "20.1.0.47",
+            "fileVersion": "20.1.0.47"
+          }
+        },
+        "compile": {
+          "lib/net5.0/Syncfusion.Licensing.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -3726,6 +3791,34 @@
       "serviceable": false,
       "sha512": ""
     },
+    "ChartJS/21.2.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+INHSphSOnOG1EFQ79lxbrYfWHamIkT8E0ytwyCrS9It9tlHlGyTXDvq3fWiEkWI7ad2Ia9SiIG6x1PnKHaV3w==",
+      "path": "chartjs/21.2.6",
+      "hashPath": "chartjs.21.2.6.nupkg.sha512"
+    },
+    "cldrjs/0.4.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QTJ2r9FpA1XOFPRguhHAFjJZZJVil5TFOUCTLpN02BjQtgXgVDpt5VFyxQp/uNwEh0InNWLdIugl2Ls1IBqfXg==",
+      "path": "cldrjs/0.4.4",
+      "hashPath": "cldrjs.0.4.4.nupkg.sha512"
+    },
+    "DevExtreme.AspNet.Data/2.8.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-i1yihftbQALysX/Sh5rm4XFVRKPXKwHcmfH8esD0fTH+RTPGpMmIUoYOg2oAAOxqJsi/F5IQ8Gkp60lDzOigRA==",
+      "path": "devextreme.aspnet.data/2.8.6",
+      "hashPath": "devextreme.aspnet.data.2.8.6.nupkg.sha512"
+    },
+    "DevExtreme.Web/21.2.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pCP2MKIqg6g9Pi2CFCW9hlVNES+6yBqDebx9NNSAOohZjkDe8uH30NvDr1GJjyysb/pivQbZ1Oxc3pZO+Gq5MA==",
+      "path": "devextreme.web/21.2.6",
+      "hashPath": "devextreme.web.21.2.6.nupkg.sha512"
+    },
     "EntityFramework/6.4.4": {
       "type": "package",
       "serviceable": true,
@@ -3754,12 +3847,19 @@
       "path": "humanizer.core/2.2.0",
       "hashPath": "humanizer.core.2.2.0.nupkg.sha512"
     },
-    "jQuery/1.7.0": {
+    "jQuery/3.5.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-UEZuBreHZNLao3z9zNPeSadyoPwKDP/5kFh+Mn1Pm9ZS0czk7bv0O6RreloGSIMAfTLZCiigNkuPb2bXKtUM+g==",
-      "path": "jquery/1.7.0",
-      "hashPath": "jquery.1.7.0.nupkg.sha512"
+      "sha512": "sha512-ji6sm/AI0vjASXAA/AG9Yf5ypALAqIDXFFKPHMAnFL8kp3xqULIWhACjg/OXZP88C56frYlIej2nrdBnhTMYQQ==",
+      "path": "jquery/3.5.1",
+      "hashPath": "jquery.3.5.1.nupkg.sha512"
+    },
+    "jquery-globalize/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tkRqYLIONjwamztg1rG+xyh2asA0ARLOPorfF3N9JW8fWr+srtPAeUNLFHF6NZAQ7Avnkzgi2OC505lK5avFag==",
+      "path": "jquery-globalize/1.1.1",
+      "hashPath": "jquery-globalize.1.1.1.nupkg.sha512"
     },
     "jquery.datatables/1.10.15": {
       "type": "package",
@@ -3767,6 +3867,13 @@
       "sha512": "sha512-9zRZ5zYafJHOwLU6sWoTM/agRx/dlu0HGQpGD/hEvqSEUJhSQjqJNTq77I97B+LCbh4eJrmNDS9PENiYY+0Isg==",
       "path": "jquery.datatables/1.10.15",
       "hashPath": "jquery.datatables.1.10.15.nupkg.sha512"
+    },
+    "JSZip/3.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yES0T93sQ4DXchqpKyWFIqSoo1HKQj7a6Gf8bEC3IzFvgNzEh2MP9gMcTYkWw2N7jhZvo7n6FukvmtkrH8i4Pw==",
+      "path": "jszip/3.1.2",
+      "hashPath": "jszip.3.1.2.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "type": "package",
@@ -4145,6 +4252,20 @@
       "sha512": "sha512-WfrqQg6WL+r4H1sVKTenNj6ERLXUukUxqcjH1rqPqXadeIWccTVpydESieD7cZ/NWQVSKLYIHuoBX5du+BFhIQ==",
       "path": "stub.system.data.sqlite.core.netstandard/1.0.115.5",
       "hashPath": "stub.system.data.sqlite.core.netstandard.1.0.115.5.nupkg.sha512"
+    },
+    "Syncfusion.EJ2.AspNet.Core/20.1.0.47": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-NpdILhyzhXZqkh2jXchGKXx0+afxkGjRcojMOzui6DCd7jFUETBow+NCfgQ8jul1YAqLWRd5QHpdHNcB/y6SFw==",
+      "path": "syncfusion.ej2.aspnet.core/20.1.0.47",
+      "hashPath": "syncfusion.ej2.aspnet.core.20.1.0.47.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/20.1.0.47": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wvtXu+N9seO8rHt18VmOGX9B2/aAzyxKteyDVXJPUBcuLf8PuRppBE9cx3gKeBokvMK03zihC/39xcz4kWdtNA==",
+      "path": "syncfusion.licensing/20.1.0.47",
+      "hashPath": "syncfusion.licensing.20.1.0.47.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",

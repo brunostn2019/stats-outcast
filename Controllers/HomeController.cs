@@ -23,8 +23,8 @@ namespace StatsOutcast.Controllers
 
         public IActionResult Index()
         {
-            List<LootModel> loots = _bll.BuscarLoots();
-            return View(loots);
+           ListasModel Listas = _bll.BuscarListasLoots();
+            return View(Listas);
         }
 
         public IActionResult Privacy()

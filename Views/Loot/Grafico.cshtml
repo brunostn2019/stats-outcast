@@ -1,0 +1,46 @@
+﻿@model List<LootModel>
+
+@{
+    ViewData["Title"] = "Grafico";
+}
+
+@section Scripts{
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+    <script type="text/javascript">
+
+
+window.onload = function () {
+
+	var chart = new CanvasJS.Chart("chartContainer", {
+        backgroundColor: 'transparent',
+	animationEnabled: true,
+	title: {
+        text: "Top @Model.Count rares from @Model[0].Boss",
+        fontSize: 20,
+        fontFamily: 'tahoma',
+        fontColor: 'Yellow',
+        fontStyle: 'bold'
+	},
+	data: [{
+        type: "doughnut",
+		startAngle: 60,
+        indexLabelFontSize: 12,
+        indexLabelFontColor: 'Yellow',
+        indexLabelFontStyle: 'bold',
+        indexLabel: "{label}: {y}",
+        indexLabelFontFamily: "tahoma",
+		toolTipContent: "<b>{label}:</b> {y}",
+		dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
+	}]
+});
+chart.render();
+
+}
+    </script>
+    }
+
+    <div class="container border rounded" id="chartContainer" style="        height: 500px;
+        width: 100%;
+        background-image: url(https://i.ibb.co/CQs68nP/bg1.jpg)"></div>
+

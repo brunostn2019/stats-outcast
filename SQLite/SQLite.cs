@@ -43,7 +43,7 @@ namespace StatsOutcast
                     loot.Item = sqlite_datareader["Item"].ToString();
                     loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
                     loot.Boss = sqlite_datareader["boss"].ToString();
-                    loot.Quantidade = Int32.Parse( sqlite_datareader["qtd"].ToString());
+                    loot.Quantidade = Int32.Parse(sqlite_datareader["qtd"].ToString());
                     loots.Add(loot);
                 }
                 sqlite_conn.Close();
@@ -184,7 +184,7 @@ namespace StatsOutcast
             var linhas = divContent.Split("Date:");
             List<String> listaLinhas = linhas.ToList();
             listaLinhas.RemoveAt(0);
-
+            int contadorRetornoZero = 0;
             foreach (var item in listaLinhas)
             {
                 linhaFormatada = item.Trim();
@@ -199,6 +199,9 @@ namespace StatsOutcast
                 lootCompleto = $"{data} {boss} {loot}";
                 result = InsertData(sqlite_conn, data, boss, loot, lootCompleto);
                 if (result == 0)
+                    contadorRetornoZero++;
+
+                if (result == 0 && contadorRetornoZero > 1000)
                     break;
             }
         }
@@ -272,6 +275,41 @@ namespace StatsOutcast
                 }
                 sqlite_conn.Close();
                 return loot.Quantidade;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+        public static List<LootModel> BuscarItemEQuantidade()
+        {
+            try
+            {
+
+
+                List<LootModel> loots = new List<LootModel>();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2  GROUP BY Item ORDER BY QTD";
+             
+                sqlite_conn.Open();
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    LootModel loot = new LootModel();
+
+                    loot.Item = sqlite_datareader["Item"].ToString();
+                    loot.Quantidade = Int32.Parse(sqlite_datareader["QTD"].ToString());
+                    loots.Add(loot);
+                }
+                sqlite_conn.Close();
+                return loots;
             }
             catch (Exception e)
             {

@@ -4,20 +4,22 @@
 // Write your JavaScript code.
 $(document).ready(function () {
     $('#tabelaLoot').DataTable({
-
+        
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['nosort']
         }],        
         "order": [],
         "processing": true,
-        "dom": 'lrtip',
+        
         "oLanguage": {
             
         }
     });
    
-});$(document).ready(function () {
+});
+
+$(document).ready(function () {
     $('#tabelaLootsBoss').DataTable({
 
         'aoColumnDefs': [{
@@ -32,3 +34,18 @@ $(document).ready(function () {
     });
    
 });
+
+$(document).ready(function () {
+    $('#tabelaLootQuantidade').DataTable({
+
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],        
+        "order": [],
+        "processing": true
+    });
+   
+});
+
+
