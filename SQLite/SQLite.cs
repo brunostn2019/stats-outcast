@@ -57,6 +57,42 @@ namespace StatsOutcast
             }
         }
 
+        internal static List<BossModel> BuscarBossesEQuantidade()
+        {
+            try
+            {
+
+
+                List<BossModel> bosses = new List<BossModel>();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Boss, COUNT(Boss) as QTD FROM LootLog2  GROUP BY Boss ORDER BY QTD";
+
+                sqlite_conn.Open();
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+                    BossModel bossModel = new BossModel();
+
+                    bossModel.NomeBoss = sqlite_datareader["Boss"].ToString();
+                    bossModel.QuantidadeLoots = Int32.Parse(sqlite_datareader["QTD"].ToString());
+                    bosses.Add(bossModel);
+                }
+                sqlite_conn.Close();
+                return bosses;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
         private static SQLiteConnection sqlite_conn;
         public static void Configurar()
         {

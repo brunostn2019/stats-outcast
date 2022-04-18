@@ -15,8 +15,9 @@ namespace StatsOutcast.BLL
         internal ListasModel BuscarListasLoots()
         {
             ListasModel Listas = new ListasModel();
-            Listas.Loots=             SQLite.BuscarLoots();
+            Listas.Loots = SQLite.BuscarLoots();
             Listas.LootsMaisRaros = SQLite.BuscarItemEQuantidade();
+            Listas.BossesAndTheirLoots = SQLite.BuscarBossesEQuantidade();
 
             return Listas;
         }
@@ -31,7 +32,7 @@ namespace StatsOutcast.BLL
             return SQLite.BuscarLootsPorBoss(nomeBoss);
         }
 
-       
+
 
 
     }

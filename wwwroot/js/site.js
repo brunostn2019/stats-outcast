@@ -49,3 +49,18 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function () {
+    $('#tabelaBossQuantidade').DataTable({
+
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        "order": [],
+        "processing": true
+    });
+
+});
+
+
+
