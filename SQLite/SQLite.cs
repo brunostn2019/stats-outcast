@@ -30,7 +30,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Item, Boss, Data, Count(Item) qtd FROM LootLog2 where Boss=@BOSS group by Item";
+                sqlite_cmd.CommandText = "SELECT Item, Boss, Data, Count(Item) qtd FROM LootLog2 where Boss=@BOSS AND Ativo=1 group by Item";
 
                 sqlite_conn.Open();
                 sqlite_cmd.Parameters.AddWithValue("BOSS", nomeBoss);
@@ -70,7 +70,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Boss, COUNT(Boss) as QTD FROM LootLog2  GROUP BY Boss ORDER BY QTD";
+                sqlite_cmd.CommandText = "SELECT Boss, COUNT(Boss) as QTD FROM LootLog2 WHERE Ativo=1 GROUP BY Boss ORDER BY QTD";
 
                 sqlite_conn.Open();
 
@@ -150,8 +150,8 @@ namespace StatsOutcast
         static int InsertData(SQLiteConnection conn, string data, string boss, string item, string lootCompleto)
         {
             int result = 0;
-            SQLiteCommand sqlite_cmd = new SQLiteCommand(@"INSERT INTO LootLog2 (Data, Boss,Item,LootCompleto) 
-                                                            SELECT @DATA, @BOSS,@ITEM,@Loot
+            SQLiteCommand sqlite_cmd = new SQLiteCommand(@"INSERT INTO LootLog2 (Data, Boss,Item,LootCompleto,Ativo) 
+                                                            SELECT @DATA, @BOSS,@ITEM,@Loot,1
                                                             WHERE NOT EXISTS(SELECT 1 FROM LootLog2 WHERE LootCompleto = @Loot)", conn);
 
             sqlite_cmd.CommandType = System.Data.CommandType.Text;
@@ -260,7 +260,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Item, Boss,Data FROM LootLog2";
+                sqlite_cmd.CommandText = "SELECT Item, Boss,Data FROM LootLog2 WHERE Ativo=1";
 
                 sqlite_conn.Open();
 
@@ -297,7 +297,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2 WHERE Item = @ITEM GROUP BY Item";
+                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2 WHERE Item = @ITEM AND Ativo=1 GROUP BY Item";
                 sqlite_cmd.Parameters.AddWithValue("ITEM", nomeItem);
                 sqlite_conn.Open();
 
@@ -331,7 +331,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2  GROUP BY Item ORDER BY QTD";
+                sqlite_cmd.CommandText = "SELECT Item, COUNT(Item) as QTD FROM LootLog2 WHERE Ativo=1 GROUP BY Item ORDER BY QTD";
              
                 sqlite_conn.Open();
 
