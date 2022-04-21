@@ -4,8 +4,10 @@
     ViewData["Title"] = "Grafico";
 }
 
+
 @section Scripts{
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
     <script type="text/javascript">
 
@@ -16,31 +18,166 @@ window.onload = function () {
         backgroundColor: 'transparent',
 	animationEnabled: true,
 	title: {
-        text: "Top @Model.Count rares from @Model[0].Boss",
+        text: "Top @Model.Take(10).ToList().Count rares from @Model[0].Boss",
         fontSize: 20,
-        fontFamily: 'tahoma',
-        fontColor: 'Yellow',
-        fontStyle: 'bold'
+        fontFamily: 'tahoma'
+
 	},
 	data: [{
         type: "doughnut",
 		startAngle: 60,
         indexLabelFontSize: 12,
-        indexLabelFontColor: 'Yellow',
-        indexLabelFontStyle: 'bold',
         indexLabel: "{label}: {y}",
         indexLabelFontFamily: "tahoma",
 		toolTipContent: "<b>{label}:</b> {y}",
-		dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
+		dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Take(10).ToList()))
 	}]
 });
 chart.render();
 
 }
     </script>
-    }
+}
 
-    <div class="container border rounded" id="chartContainer" style="        height: 500px;
-        width: 100%;
-        background-image: url(https://i.ibb.co/CQs68nP/bg1.jpg)"></div>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Boss chart</h6>
+
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+
+
+                <div class="container border rounded" id="chartContainer" style="        height: 500px;
+        width: 100%;"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<div class="row">
+
+    <!-- Area Chart -->
+    <div class="col-xl-6 col-lg-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Rarest items by quantity</h6>
+
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+
+
+                <table id="tabelaLootQuantidadeBoss" class="table table-bordered table-hover display compact">
+                    <thead>
+                        <tr>
+
+
+                            <th>Item</th>
+                            <th>Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @{
+
+                            foreach (var item in Model)
+                            {
+                                <tr>
+
+
+                                    @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+                                    <td><a asp-action="Boss" asp-controller="loot">@item.Item</a></td>
+
+                                    <td>@item.Quantidade</td>
+                                </tr>
+
+                            }
+                        }
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top 14 rarest items from @Model[0].Boss</h6>
+            </div>
+            <div class="card-body">
+                @{
+                    List<string> cores = new List<string>();
+                    cores.Add("darkred");
+                    cores.Add("darkred");
+                    cores.Add("darkred");
+                    cores.Add("red");
+                    cores.Add("red");
+                    cores.Add("darkorange");
+                    cores.Add("darkorange");
+                    cores.Add("orange");
+                    cores.Add("orange");
+                    cores.Add("yellow");
+                    cores.Add("yellow");
+                    cores.Add("yellow");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("#ccff66");
+                    cores.Add("lawngreen");
+                    cores.Add("lawngreen");
+                    cores.Add("lawngreen");
+                    cores.Add("lawngreen");
+                    cores.Add("lawngreen");
+                    cores.Add("lawngreen");
+
+
+                    foreach (var item in Model.Take(14).ToList())
+                    {
+                        Int32 porcentagem = Convert.ToInt32((item.Quantidade * 100) / @Model.Take(14).Last().Quantidade);
+                        string cor = item.Quantidade > cores.Count ? cores.Last() : cores[item.Quantidade];
+
+                        <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                            @item.Item <span class="float-right">@item.Quantidade </span>
+                        </h4>
+                        <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                            <div class="progress-bar" role="progressbar" style="background-color:@cor; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @porcentagem%; "
+                                 aria-valuenow="@item.Quantidade" aria-valuemin="0" aria-valuemax="@Model.Take(14).Last().Quantidade"></div>
+                        </div>
+
+                    }
+                }
+
+
+            </div>
+        </div>
+
+        <!-- Color System -->
+
+
+    </div>
+
+
+</div>

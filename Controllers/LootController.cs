@@ -20,7 +20,7 @@ namespace StatsOutcast.Controllers
         public IActionResult Grafico(string bossName)
         {
             List<LootModel> loots = _bll.BuscarLootsPorBoss(bossName);
-            loots = loots.OrderBy(s => s.Quantidade).Take(10).ToList();
+            loots = loots.OrderBy(s => s.Quantidade).ToList();
          
             return View(loots);
         }

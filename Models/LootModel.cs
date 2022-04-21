@@ -16,5 +16,6 @@ namespace StatsOutcast.Models
         public String LootCompleto { get; set; }
         [DataMember(Name = "y")]
         public int Quantidade { get; set; }
+       
     }
 }

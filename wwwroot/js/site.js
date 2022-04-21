@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#tabelaLoot').DataTable({
+   var tabela= $('#tabelaLoot').DataTable({
         
         'aoColumnDefs': [{
             'bSortable': false,
@@ -16,7 +16,8 @@ $(document).ready(function () {
             
         }
     });
-   
+
+  
 });
 
 $(document).ready(function () {
@@ -62,5 +63,19 @@ $(document).ready(function () {
 
 });
 
+
+
+$(document).ready(function () {
+    $('#tabelaLootQuantidadeBoss').DataTable({
+
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        "order": [],
+        "processing": true
+    });
+
+});
 
 

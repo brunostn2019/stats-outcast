@@ -16,9 +16,18 @@ namespace StatsOutcast.BLL
         {
             ListasModel Listas = new ListasModel();
             Listas.Loots = SQLite.BuscarLoots();
+            Listas = CalculaMedias(Listas);
             Listas.LootsMaisRaros = SQLite.BuscarItemEQuantidade();
             Listas.BossesAndTheirLoots = SQLite.BuscarBossesEQuantidade();
 
+            return Listas;
+        }
+
+        private ListasModel CalculaMedias(ListasModel Listas)
+        {
+            Listas.QuantidadePorDia = Convert.ToInt32(Listas.Loots.Count /(Listas.Loots.First().Data - Listas.Loots.Last().Data).TotalDays);
+            Listas.QuantidadePorMes = Listas.QuantidadePorDia * 30;
+            Listas.QuantidadePorAno = Listas.QuantidadePorDia * 365;
             return Listas;
         }
 

@@ -34,6 +34,21 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    First droped item
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Loots.Last().Item</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
@@ -74,6 +89,10 @@
                 </div>
             </div>
 
+
+        </div>
+        <div class="row">
+
             <!-- Pending Requests Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border-left-warning shadow h-100 py-2">
@@ -90,6 +109,59 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Loots per day (Average)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QuantidadePorDia</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Loots per month (Average)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.QuantidadePorMes </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Loots per year (Average)
+                                </div>
+
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.QuantidadePorAno </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
 
@@ -100,7 +172,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Loots of all time</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Last 1000 loots</h6>
 
                     </div>
                     <!-- Card Body -->
@@ -118,14 +190,14 @@
                                 <tbody>
 
                                     @{
-                                        int contador = Model.Loots.Count;
-                                        foreach (var item in Model.Loots)
+                                        int contador = 1000;
+                                        foreach (var item in Model.Loots.Take(1000))
                                         {
                                             <tr>
                                                 <td>@contador</td>
                                                 <td>@item.Data</td>
                                                 @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                                <td><a asp-action="Item" asp-controller="loot">@item.Item</a></td>
+                                                <td>@item.Item</td>
                                                 <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.Boss">@item.Boss</a></td>
 
                                             </tr>
@@ -179,7 +251,7 @@
 
 
                                             @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                            <td><a asp-action="Boss" asp-controller="loot">@item.Item</a></td>
+                                            <td>@item.Item</td>
 
                                             <td>@item.Quantidade</td>
                                         </tr>
@@ -212,12 +284,12 @@
                             cores.Add("red");
                             cores.Add("red");
                             cores.Add("darkorange");
-                            cores.Add("darkorange");                      
+                            cores.Add("darkorange");
                             cores.Add("orange");
-                            cores.Add("orange");                   
+                            cores.Add("orange");
                             cores.Add("yellow");
                             cores.Add("yellow");
-                            cores.Add("yellow");                       
+                            cores.Add("yellow");
                             cores.Add("#ccff66");
                             cores.Add("#ccff66");
                             cores.Add("#ccff66");
@@ -236,12 +308,12 @@
                             foreach (var item in Model.LootsMaisRaros.Take(14).ToList())
                             {
                                 Int32 porcentagem = Convert.ToInt32((item.Quantidade * 100) / @Model.LootsMaisRaros.Take(14).Last().Quantidade);
-
+                                string cor = item.Quantidade > cores.Count ? cores.Last() : cores[item.Quantidade];
                                 <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
                                     @item.Item <span class="float-right">@item.Quantidade </span>
                                 </h4>
                                 <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
-                                    <div class="progress-bar" role="progressbar" style="background-color:@cores[item.Quantidade]; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @porcentagem%; "
+                                    <div class="progress-bar" role="progressbar" style="background-color:@cor; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @porcentagem%; "
                                          aria-valuenow="@item.Quantidade" aria-valuemin="0" aria-valuemax="@Model.LootsMaisRaros.Take(14).Last().Quantidade"></div>
                                 </div>
 
@@ -253,10 +325,10 @@
                 </div>
 
                 <!-- Color System -->
-            
+
 
             </div>
-         
+
 
         </div>
 
@@ -295,14 +367,14 @@
 
                                     foreach (var item in Model.BossesAndTheirLoots)
                                     {
-                                        <tr>
+                                                                <tr>
 
 
-                                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                            <td><a asp-action="Boss" asp-controller="loot">@item.NomeBoss</a></td>
-
-                                            <td>@item.QuantidadeLoots</td>
-                                        </tr>
+                                                                    @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+                                                                  
+                                                                    <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.NomeBoss">@item.NomeBoss</a></td>
+                                                                    <td>@item.QuantidadeLoots</td>
+                                                                </tr>
 
                                     }
                                 }
@@ -319,45 +391,7 @@
 
             <div class="col-lg-6 mb-4">
 
-                <!-- Illustrations -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center">
-                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                 src="img/undraw_posting_photo.svg" alt="...">
-                        </div>
-                        <p>
-                            Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                            constantly updated collection of beautiful svg images that you can use
-                            completely free and without attribution!
-                        </p>
-                        <a target="_blank" rel="nofollow" href="https://undraw.co/">
-                            Browse Illustrations on
-                            unDraw &rarr;
-                        </a>
-                    </div>
-                </div>
 
-                <!-- Approach -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                    </div>
-                    <div class="card-body">
-                        <p>
-                            SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                            CSS bloat and poor page performance. Custom CSS classes are used to create
-                            custom components and custom utility classes.
-                        </p>
-                        <p class="mb-0">
-                            Before working with this theme, you should become familiar with the
-                            Bootstrap framework, especially the utility classes.
-                        </p>
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -373,35 +407,10 @@
     <!-- JS -->
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script>
 
-    <script type="text/javascript">
+     
 
-
-window.onload = function () {
-
-	var chart = new CanvasJS.Chart("chartContainer", {
-        backgroundColor: 'transparent',
-	animationEnabled: true,
-	title: {
-        text: "Top 7 rarest items",
-        fontSize: 12
-
-	},
-	data: [{
-        type: "doughnut",
-		startAngle: 60,
-        indexLabelFontSize: 11,
-        indexLabelFontColor: 'Yellow',
-        indexLabel: "{label}: {y}",
-        indexLabelFontFamily: "tahoma",
-		toolTipContent: "<b>{label}:</b> {y}",
-		dataPoints: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.LootsMaisRaros.Take(7)))
-	}]
-});
-chart.render();
-
-}
     </script>
 }
 
