@@ -103,6 +103,7 @@ namespace StatsOutcast
                 //CreateTable(sqlite_conn);
                 //int teste =BuscarQuantidadePorItem("The Roc Head");
                 ProcessarLootPage("https://outcastserver.com/loot.php");
+                ProcessarLevelPage("https://outcastserver.com/ranks.php?lvl");
 
             }
             catch (Exception e)
@@ -113,6 +114,73 @@ namespace StatsOutcast
 
             //ReadData(sqlite_conn);
         }
+
+        private static void ProcessarLevelPage(string pagina)
+        {
+            List<PlayerModel> listaPlayers = new List<PlayerModel>();
+            PlayerModel p = new PlayerModel();
+            var levelPage = GetHtml(pagina);
+            string divContent = levelPage.SelectSingleNode("//table").InnerText;
+            divContent = divContent.Replace("RankNameLevel", "");
+            divContent = divContent.Replace("\r", "");
+            divContent = divContent.Replace("\t", "");
+            divContent = divContent.Replace("    ", "");
+            //divContent = Regex.Replace(divContent, @"\s+", " ").Trim();
+            var linhas = divContent.Split("\n");
+            var lista = linhas.ToList();
+            for (int i = 0; i < lista.Count; i++)
+            {
+
+                if (String.IsNullOrEmpty(lista[i].Trim()))
+                {
+                    lista.RemoveAt(i);
+                    i--;
+                }
+                else if (String.IsNullOrWhiteSpace(lista[i].Trim()))
+                { 
+                    lista.RemoveAt(i);
+                    i--;
+                }
+                else
+                    lista[i] = lista[i].Trim();
+            }
+            p = new PlayerModel();
+            p.Data = DateTime.Now;
+            p.Rank = 1;
+            p.Nome = lista[0];
+            p.Level = Convert.ToInt32(lista[1]);
+            listaPlayers.Add(p);
+
+            p = new PlayerModel();
+            p.Data = DateTime.Now;
+            p.Rank = 2;
+            p.Nome = lista[2];
+            p.Level = Convert.ToInt32(lista[3]);
+            listaPlayers.Add(p);
+
+            p = new PlayerModel();
+            p.Data = DateTime.Now;
+            p.Rank = 3;
+            p.Nome = lista[4];
+            p.Level = Convert.ToInt32(lista[5]);
+            listaPlayers.Add(p);
+
+            int contadorIndex = 6;
+            while (contadorIndex < lista.Count)
+            {
+                p = new PlayerModel();
+                p.Data = DateTime.Now;
+                p.Rank = Convert.ToInt32(lista[contadorIndex]);
+                contadorIndex++;
+                p.Nome = lista[contadorIndex];
+                contadorIndex++;
+                p.Level = Convert.ToInt32(lista[contadorIndex]);
+                contadorIndex++;
+                listaPlayers.Add(p);
+            }
+            var a = listaPlayers;
+        }
+
         public static SQLiteConnection CreateConnection()
         {
 
@@ -241,7 +309,6 @@ namespace StatsOutcast
                     break;
             }
         }
-
         static HtmlNode GetHtml(string url)
         {
             WebPage webpage = _browser.NavigateToPage(new Uri(url));
