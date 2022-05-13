@@ -19,6 +19,7 @@ namespace StatsOutcast.BLL
             Listas = CalculaMedias(Listas);
             Listas.LootsMaisRaros = SQLite.BuscarItemEQuantidade();
             Listas.BossesAndTheirLoots = SQLite.BuscarBossesEQuantidade();
+            Listas.Players = SQLite.BuscarPlayers();
 
             return Listas;
         }

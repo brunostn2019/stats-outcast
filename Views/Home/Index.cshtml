@@ -367,14 +367,14 @@
 
                                     foreach (var item in Model.BossesAndTheirLoots)
                                     {
-                                                                <tr>
+                                        <tr>
 
 
-                                                                    @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                                                  
-                                                                    <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.NomeBoss">@item.NomeBoss</a></td>
-                                                                    <td>@item.QuantidadeLoots</td>
-                                                                </tr>
+                                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+
+                                            <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.NomeBoss">@item.NomeBoss</a></td>
+                                            <td>@item.QuantidadeLoots</td>
+                                        </tr>
 
                                     }
                                 }
@@ -389,10 +389,55 @@
                 </div>
             </div>
 
-            <div class="col-lg-6 mb-4">
+            <div class="col-xl-6 col-lg-6">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Players Top level</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
 
 
+                        <table id="tabelaPlayerTop" class="table table-bordered table-hover display compact">
+                            <thead>
+                                <tr>
 
+
+                                    <th>Rank</th> 
+                                    <th>Name</th>
+                                    <th>Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @{
+
+                                    foreach (var item in Model.Players)
+                                    {
+                                        <tr>
+
+
+                                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+                                            <td>@item.Rank</td>
+
+                                            <td>@item.Nome</td>
+                                            <td>@item.Level</td>
+                                        </tr>
+
+                                    }
+                                }
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
             </div>
         </div>
 

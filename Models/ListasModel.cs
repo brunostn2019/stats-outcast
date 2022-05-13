@@ -13,6 +13,7 @@ namespace StatsOutcast.Models
         public List<LootModel> LootsMenosRaros { get; set; }
         public List<LootModel> LootsRecentes { get; set; }
         public List<BossModel> BossesAndTheirLoots { get; set; }
+        public List<PlayerModel> Players { get; set; }
 
         public int QuantidadePorDia { get; set; }
         public int QuantidadePorMes { get; set; }

@@ -23,6 +23,7 @@ namespace StatsOutcast.Controllers
 
         public IActionResult Index()
         {
+
            ListasModel Listas = _bll.BuscarListasLoots();
             return View(Listas);
         }

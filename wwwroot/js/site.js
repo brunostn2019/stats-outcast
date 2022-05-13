@@ -78,4 +78,18 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(function () {
+    $('#tabelaPlayerTop').DataTable({
+
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        "order": [],
+        "processing": true
+    });
+
+});
+
+
 
