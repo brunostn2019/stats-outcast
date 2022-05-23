@@ -16,6 +16,7 @@ namespace StatsOutcast.Models
         public int Level { get; set; }
         public int Rank { get; set; }
         public int Age { get; set; }
+        public decimal LevelPerDayAvg { get; set; }
 
 
     }

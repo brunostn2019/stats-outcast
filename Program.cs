@@ -15,7 +15,7 @@ namespace StatsOutcast
     {
         public static void Main(string[] args)
         {
-            SQLite.Configurar();
+            //SQLite.Configurar();
             CreateHostBuilder(args).Build().Run();
         }
        

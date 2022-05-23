@@ -68,7 +68,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT nome, level FROM Players ORDER BY level desc";
+                sqlite_cmd.CommandText = "SELECT nome,level,vocacao,guild,magiclevel,gender,age FROM Players ORDER BY level desc";
 
                 sqlite_conn.Open();
 
@@ -79,7 +79,13 @@ namespace StatsOutcast
                     PlayerModel playerModel = new PlayerModel();
 
                     playerModel.Nome = sqlite_datareader["nome"].ToString();
+                    playerModel.Vocation = sqlite_datareader["vocacao"].ToString();
+                    playerModel.Guild = sqlite_datareader["guild"].ToString();
+                    playerModel.Gender = sqlite_datareader["gender"].ToString();
                     playerModel.Level = Int32.Parse(sqlite_datareader["level"].ToString());
+                    playerModel.Age = Int32.Parse(sqlite_datareader["age"].ToString());
+                    playerModel.MagicLevel = Int32.Parse(sqlite_datareader["magiclevel"].ToString());
+                    playerModel.LevelPerDayAvg = CalcularLevelPerDay(playerModel);
                     playerModel.Rank = rank;
 
                     players.Add(playerModel);
@@ -87,6 +93,47 @@ namespace StatsOutcast
                 }
                 sqlite_conn.Close();
                 return players;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
+        private static decimal CalcularLevelPerDay(PlayerModel player)
+        {
+            try
+            {
+
+
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT DISTINCT nome,level, data,id FROM PlayersLevelLog WHERE nome = @Nome order by id";
+                //sqlite_cmd.CommandText = "SELECT Item, Boss, Data, Count(Item) qtd FROM LootLog2 where Boss=@BOSS AND Ativo=1 group by Item";
+
+                sqlite_conn.Open();
+                sqlite_cmd.Parameters.AddWithValue("Nome", player.Nome);
+                decimal levelDif = 0;
+                decimal dataDif = 0;
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                if (sqlite_datareader.Read())
+                {
+
+                    Decimal levelAntigo = Decimal.Parse(sqlite_datareader["level"].ToString());
+                    levelDif = player.Level - levelAntigo;
+                    DateTime dataAntiga = DateTime.ParseExact(sqlite_datareader["data"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                    dataDif = (DateTime.Now - dataAntiga).Days;
+                }
+                sqlite_conn.Close();
+                if (levelDif > 0 && dataDif > 0)
+                    return levelDif / dataDif;
+                else
+                    return 0;
             }
             catch (Exception e)
             {
@@ -141,6 +188,7 @@ namespace StatsOutcast
                 //CreateTable(sqlite_conn);
                 //int teste =BuscarQuantidadePorItem("The Roc Head");
                 ProcessarLootPage("https://outcastserver.com/loot.php");
+
                 ProcessarLevelPage1("https://outcastserver.com/ranks.php?lvl");
                 ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=1");
                 ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=2");
@@ -347,7 +395,7 @@ namespace StatsOutcast
             result = VerificaPlayer(player);
             if (result == 0)
             {
-
+                //sqlite_conn = CreateConnection();
                 SQLiteCommand sqlite_cmd = new SQLiteCommand(@"REPLACE INTO Players (nome,level,ativo,dataAtualizacao,vocacao,guild,magiclevel,gender,age) 
                                                             VALUES( @nome, @level,1,@data,@vocacao,@guild,@magiclevel,@gender,@age)"
                                                                , conn);
@@ -361,9 +409,9 @@ namespace StatsOutcast
                 sqlite_cmd.Parameters.AddWithValue("magiclevel", player.MagicLevel);
                 sqlite_cmd.Parameters.AddWithValue("gender", player.Gender);
                 sqlite_cmd.Parameters.AddWithValue("age", player.Age);
-                sqlite_conn.Open();
+                conn.Open();
                 result = sqlite_cmd.ExecuteNonQuery();
-                sqlite_conn.Close();
+                conn.Close();
             }
             else
                 result = 0;
@@ -391,7 +439,7 @@ namespace StatsOutcast
                     result++;
                 }
                 sqlite_conn.Close();
-               
+
                 return result;
             }
             catch (Exception e)
@@ -432,7 +480,7 @@ namespace StatsOutcast
         {
             try
             {
-               
+
                 var lootPage = GetHtml(pagina);
                 string divContent = lootPage.SelectSingleNode("//div[@class='content_txt']").InnerText;
 
@@ -446,10 +494,10 @@ namespace StatsOutcast
                     player.Guild = linhas[6].Contains("None") ? "None" : linhas[6].Split("(")[0].Split(new string[] { "of" }, StringSplitOptions.None).Last().Trim();
                 }
                 else
-                { 
+                {
                     player.Age = Convert.ToInt32(linhas[6].Contains("This player") ? linhas[6].Split("This player")[0].Split(new string[] { "(Age):" }, StringSplitOptions.None).Last() : linhas[6].Split("Current")[0].Split(new string[] { "(Age):" }, StringSplitOptions.None).Last());
                     player.Guild = linhas[5].Contains("None") ? "None" : linhas[5].Split("(")[0].Split(new string[] { "of" }, StringSplitOptions.None).Last().Trim();
-                
+
                 }
 
                 player.Vocation = linhas[3].Split(new string[] { "Vocation:" }, StringSplitOptions.None).Last().Trim();
@@ -458,10 +506,12 @@ namespace StatsOutcast
                 var arrayMortes = mortes.Split("\n");
                 if (arrayMortes[1].Contains("Killed"))
                 {
-                    string data = arrayMortes[1].Split("Killed")[0].Substring(0,10);
-                    DateTime da = new DateTime(Convert.ToInt32(data.Substring(0, 4)), Convert.ToInt32(data.Substring(5, 2)), Convert.ToInt32(data.Substring(8,2)));
+                    string data = arrayMortes[1].Split("Killed")[0].Substring(0, 10);
+                    DateTime da = new DateTime(Convert.ToInt32(data.Substring(0, 4)), Convert.ToInt32(data.Substring(5, 2)), Convert.ToInt32(data.Substring(8, 2)));
                     int level = Convert.ToInt32(arrayMortes[1].Split(" by ")[0].Split(new string[] { "level" }, StringSplitOptions.None).Last().Trim());
+                    InsertPlayerLog(da.ToString("dd/MM/yyyy"), level, player.Nome);
                 }
+
                 // divContent = divContent.Replace("\r", " ");
                 //  divContent = divContent.Replace("\n", " ");
                 // divContent = Regex.Replace(divContent, @"\s+", " ").Trim();
@@ -474,6 +524,27 @@ namespace StatsOutcast
             }
 
         }
+
+        private static void InsertPlayerLog(string data, int level, string nome)
+        {
+            int result = 0;
+            SQLiteCommand sqlite_cmd = new SQLiteCommand(@"INSERT INTO PlayersLevelLog (nome, data,level) 
+                                                            SELECT @NOME, @DATA,@LEVEL
+ 
+                                                            WHERE NOT EXISTS(SELECT 1 FROM PlayersLevelLog WHERE nome = @NOME AND data = @DATA AND level = @LEVEL)
+                                                          ", sqlite_conn);
+
+            sqlite_cmd.CommandType = System.Data.CommandType.Text;
+            sqlite_cmd.Parameters.AddWithValue("DATA", data);
+            sqlite_cmd.Parameters.AddWithValue("NOME", nome);
+            sqlite_cmd.Parameters.AddWithValue("LEVEL", level);
+            // sqlite_cmd.Parameters.AddWithValue("Loot", lootCompleto);
+            sqlite_conn.Open();
+            result = sqlite_cmd.ExecuteNonQuery();
+            sqlite_conn.Close();
+
+        }
+
         private static void ProcessarLootPage(string pagina)
         {
             var lootPage = GetHtml(pagina);

@@ -389,7 +389,10 @@
                 </div>
             </div>
 
-            <div class="col-xl-6 col-lg-6">
+         
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -403,11 +406,15 @@
                         <table id="tabelaPlayerTop" class="table table-bordered table-hover display compact">
                             <thead>
                                 <tr>
-
-
-                                    <th>Rank</th> 
+                                    <th>Rank</th>
                                     <th>Name</th>
                                     <th>Level</th>
+                                    <th>Magic Level</th>
+                                    <th>Vocation</th>                                    
+                                    <th>Guild</th>
+                                    <th>Gender</th>
+                                    <th>Age</th>
+                                    <th>Lvls/day</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -422,9 +429,15 @@
 
                                             @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
                                             <td>@item.Rank</td>
-
                                             <td>@item.Nome</td>
                                             <td>@item.Level</td>
+                                            <td>@item.MagicLevel</td>
+                                            <td>@item.Vocation</td>
+                                            <td>@item.Guild</td>
+                                            <td>@item.Gender</td>
+                                            <td>@item.Age</td>
+                                            <td>@item.LevelPerDayAvg.ToString("0.0")</td>
+                                          
                                         </tr>
 
                                     }
@@ -440,7 +453,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.container-fluid -->
 </div>
