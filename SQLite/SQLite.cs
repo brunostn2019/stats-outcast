@@ -41,7 +41,7 @@ namespace StatsOutcast
                     LootModel loot = new LootModel();
 
                     loot.Item = sqlite_datareader["Item"].ToString();
-                    loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
+                    loot.Data = DateTime.ParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd HH:mm", null);
                     loot.Boss = sqlite_datareader["boss"].ToString();
                     loot.Quantidade = Int32.Parse(sqlite_datareader["qtd"].ToString());
                     loots.Add(loot);
@@ -652,7 +652,7 @@ namespace StatsOutcast
                     LootModel loot = new LootModel();
 
                     loot.Item = sqlite_datareader["Item"].ToString();
-                    loot.Data = DateTime.Parse(sqlite_datareader["data"].ToString());
+                    loot.Data = DateTime.ParseExact(sqlite_datareader["data"].ToString(),"yyyy/MM/dd HH:mm",null);
                     loot.Boss = sqlite_datareader["boss"].ToString();
                     loots.Add(loot);
                 }
