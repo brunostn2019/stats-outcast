@@ -162,7 +162,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT Boss, COUNT(Boss) as QTD FROM LootLog2 WHERE Ativo=1 GROUP BY Boss ORDER BY QTD";
+                sqlite_cmd.CommandText = "SELECT Boss, COUNT(Boss) as QTD FROM LootLog2 WHERE Ativo=1 GROUP BY Boss ORDER BY QTD DESC";
 
                 sqlite_conn.Open();
 
