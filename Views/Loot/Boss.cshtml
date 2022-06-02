@@ -3,17 +3,19 @@
     ViewData["Title"] = "Bosses";
 }
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.dataTables.min.css">
 
 <div class="text-center">
     <h1 class="display-4">@Model[0].Boss Stats</h1>
 
 
-    <table id="tabelaLootsBoss" class="table table-bordered table-hover display compact" >
+    <table id="tabelaLootsBoss" class="table table-bordered table-hover display compact">
         <thead>
             <tr>
                 <th>Id</th>
-            
+
                 <th>Item</th>
                 <th>Quantity</th>
             </tr>
@@ -26,7 +28,7 @@
                 {
                     <tr>
                         <td>@contador</td>
-                     
+
                         @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
                         <td><a asp-action="Boss" asp-controller="loot">@item.Item</a></td>
 
@@ -47,7 +49,9 @@
 @section Scripts{
     <!-- JS -->
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript">
 
         function Modal() {

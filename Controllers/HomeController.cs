@@ -27,9 +27,9 @@ namespace StatsOutcast.Controllers
            ListasModel Listas = _bll.BuscarListasLoots();
             return View(Listas);
         }
-        public IActionResult Atualizar()
+        public IActionResult AtualizarLoot()
         {
-            SQLite.Configurar();
+            SQLite.ConfigurarLoot();
            return RedirectToAction("Index");
         }
 

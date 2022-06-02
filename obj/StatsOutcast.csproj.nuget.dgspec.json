@@ -1,26 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dev\\StatsOutcast\\StatsOutcast.csproj": {}
+    "E:\\dev\\StatsOutcast\\StatsOutcast.csproj": {}
   },
   "projects": {
-    "D:\\dev\\StatsOutcast\\StatsOutcast.csproj": {
+    "E:\\dev\\StatsOutcast\\StatsOutcast.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dev\\StatsOutcast\\StatsOutcast.csproj",
+        "projectUniqueName": "E:\\dev\\StatsOutcast\\StatsOutcast.csproj",
         "projectName": "StatsOutcast",
-        "projectPath": "D:\\dev\\StatsOutcast\\StatsOutcast.csproj",
-        "packagesPath": "C:\\Users\\brunos\\.nuget\\packages\\",
-        "outputPath": "D:\\dev\\StatsOutcast\\obj\\",
+        "projectPath": "E:\\dev\\StatsOutcast\\StatsOutcast.csproj",
+        "packagesPath": "C:\\Users\\ssd\\.nuget\\packages\\",
+        "outputPath": "E:\\dev\\StatsOutcast\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "c:\\program files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\brunos\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\ssd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -96,6 +91,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.13, 5.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -104,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "c:\\program files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

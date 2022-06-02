@@ -1,0 +1,425 @@
+﻿@model ListasModel
+@{
+    ViewData["Title"] = "Player Page";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.dataTables.css">
+
+<div class="text-center">
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Outcast Server Stats</h1>
+
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Top level per day avg
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.OrderBy(p => p.LevelPerDayAvg).Last().Nome -
+                                    @Model.Players.OrderBy(p => p.LevelPerDayAvg).Last().LevelPerDayAvg.ToString("0.0") lvl/day
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Top Male by level
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Gender.Equals("Male")).First().Nome -
+                                    @Model.Players.Where(a => a.Gender.Equals("Male")).First().Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Top Female by level
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Gender.Equals("Female")).First().Nome -
+                                    @Model.Players.Where(a => a.Gender.Equals("Female")).First().Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Oldest Player in Rank
+                                </div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                    @Model.Players.OrderBy(p => p.Age).Last().Nome -
+                                    @Model.Players.OrderBy(p => p.Age).Last().Age
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Top level EK
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Vocation.Contains("Knight")).First().Nome -
+                                    @Model.Players.Where(a => a.Vocation.Contains("Knight")).First().Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Top level ED
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Vocation.Contains("Druid")).First().Nome -
+                                    @Model.Players.Where(a => a.Vocation.Contains("Druid")).First().Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Top level MS
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Vocation.Contains("Sorcerer")).First().Nome -
+                                    @Model.Players.Where(a => a.Vocation.Contains("Sorcerer")).First().Level
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Top level RP
+                                </div>
+
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @Model.Players.Where(a => a.Vocation.Contains("Paladin")).First().Nome -
+                                    @Model.Players.Where(a => a.Vocation.Contains("Paladin")).First().Level
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Players Top level</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+
+                        <table id="tabelaPlayerTop" class="table table-bordered table-hover display compact">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Name</th>
+                                    <th>Level</th>
+                                    <th class="not-mobile">Magic Level</th>
+                                    <th class="desktop">Vocation</th>
+                                    <th class="desktop">Guild</th>
+                                    <th class="desktop">Gender</th>
+                                    <th class="desktop">Age</th>
+                                    <th>Lvls/day</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @{
+
+                                    foreach (var item in Model.Players)
+                                    {
+                                        <tr>
+
+
+                                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
+                                            <td>@item.Rank</td>
+                                            <td>
+                                                <div style="float:left">
+                                                    @item.Nome
+                                                </div>
+                                                <div style="float:right">
+                                                    @if (item.Age > 1000)
+                                                    {
+                                                        <span class="badge badge-danger" data-toggle="tooltip" data-placement="right" title="Grandma">Old</span>
+                                                    }
+
+                                                    @if (item.Vocation.Contains("Knight") && item.MagicLevel > 14)
+                                                    {
+                                                        <span class="badge badge-dark" data-toggle="tooltip" data-placement="right" title="EK Mage">SD</span>
+                                                    }
+
+
+                                                    @if (item.Level > 3999)
+                                                    {
+                                                        <span class="badge badge-success" data-toggle="tooltip" data-placement="right" title="level 4k+ no lifer">4k</span>
+                                                    }
+                                                    else if (item.Level > 2999)
+                                                    {
+                                                        <span class="badge badge-primary" data-toggle="tooltip" data-placement="right" title="level 3k+ PRO player :)">3k</span>
+                                                    }
+
+                                                    @if (item.LevelPerDayAvg > 10)
+                                                    {
+                                                        <span class="badge badge-dark" data-toggle="tooltip" data-placement="right" title="10+ level/day">PG</span>
+                                                    }
+                                                    else if (item.LevelPerDayAvg > 7)
+                                                    {
+                                                        <span class="badge badge-warning" data-toggle="tooltip" data-placement="right" title="7+ level/day">PG</span>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@item.Level</td>
+                                            <td>@item.MagicLevel</td>
+                                            <td>@item.Vocation</td>
+                                            <td>@item.Guild</td>
+                                            <td>@item.Gender</td>
+                                            <td>@item.Age</td>
+                                            <td>@item.LevelPerDayAvg.ToString("0.0")</td>
+
+                                        </tr>
+
+                                    }
+                                }
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+
+
+
+@section Scripts{
+    <!-- JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.js"></script>
+    <script>
+
+
+
+    </script>
+}
+
+
+
+@*Helmet of the Dark Warrior (1.5 GNs)
+    Zeniths Helmet (3 GNs)
+    Templar Helm (3 GNs)
+    Draconian Visage (3.5 GNs)
+    Helmet of the Fallen Gods (4 GNs)
+    Helarctos Head (5.5 GNs)
+    Hood of the Dark Overlord (6.5 GNs)
+    Cyclip Helmet (8 GNs)
+    Mask of the Craak Slayer (11 GNs)
+    Oceanic Lizard Head (10 GNs)
+    Marianas Helmet (75 GNs)
+    Craaktrons Helmet (125 GNs)
+    Helmet of the Sky Rider (350 GNs)
+    Red Scorcher Hat (550 GNs)
+    Hoodoo Hat (750 GNs)
+    Neptune Helmet (1000 GNs).
+     Armor of the Dark Warrior (1.5 GNs)
+    Zeniths Armor (3 GNs)
+    Templar Harness (3 GNs)
+    Scales of the Draconian Lord (3.5 GNs)
+    Armor of the Fallen Gods (4 GNs)
+    Helarctos Body (5.5 GNs)
+    Body Armor of the Dark Overlord (6.5 GNs)
+    Cyclip Armor (8 GNs)
+    Cyclip Robe (8 GNs)
+    Titanium Body of the Craak Slayer (11 GNs)
+    Oceanic Lizard Body (10 GNs)
+    Marianas Armor (75 GNs)
+    Craaktrons Armor (125 GNs)
+    Armor of the Sky Rider (350 GNs)
+    Red Scorcher Cape (550 GNs)
+    Hoodoo Suit (750 GNs)
+    Neptune Armor (1000 GNs).
+     Legs of the Dark Warrior (1.5 GNs)
+    Zeniths Skirt (3 GNs)
+    Templar Trousers (3 GNs)
+    Draconian Legs of Fortitude (3.5 GNs)
+    Legs of the Fallen Gods (4 GNs)
+    Helarctos Legs (5.5 GNs)
+    Saggy Pants of the Dark Overlord (6.5 GNs)
+    Cyclip Legs (8 GNs)
+    Titanium Craak Legs (11 GNs)
+    Oceanic Lizard Legs (4 GNs)
+    Marianas Legs (75 GNs)
+    Craaktrons Legs (125 GNs)
+    Legs of the Sky Rider (350 GNs)
+    Red Scorcher Legs (550 GNs)
+    Hoodoo Pants (750 GNs)
+    Neptune Legs (1000 GNs).
+     Boots of the Dark Warrior (1.5 GNs)
+    Zeniths Boots (3 GNs)
+    Templar Clodhoppers (3 GNs)
+    Draconian Shackles (3.5 GNs)
+    Boots of the Fallen Gods (4 GNs)
+    Helarctos Feet (5.5 GNs)
+    Light Boots of the Dark Overlord (6.5 GNs)
+    Cyclip Boots (8 GNs)
+    Titanium Craak Boots (11 GNs)
+    Oceanic Lizard Boots (10 GNs)
+    Marianas Boots (75 GNs)
+    Craaktrons Boots (125 GNs)
+    Shoes of the Sky Rider (350 GNs)
+    Red Scorcher Boots (550 GNs)
+    Hoodoo Shoes (750 GNs)
+    Neptune Boots (1000 GNs).
+     Endymions Wand (3 GNs)
+    Staff of the Archmage (3 GNs)
+    Golden Spear (3 GNs)
+    Axe of Phoenix (3 GNs)
+    Slaughterers Axe (3 GNs)
+    Twin Axe (3 GNs)
+    Moralltach (3 GNs)
+    Djinn Blade (3 GNs)
+    The Executor (3 GNs)
+    Thors Hammer (3 GNs)
+    Mace of Fury (3 GNs)
+    Aethers Wand (4 GNs)
+    Aratrons Wand (4 GNs)
+    Club of the Oceanic Lizard (6 GNs)
+    Axe of the Oceanic Lizard (6 GNs)
+    Sword of the Oceanic Lizard (6 GNs)
+    Spear of the Oceanic Lizard (6 GNs)
+    Wand of the Oceanic Lizard (6 GNs)
+    Sword of the Sky Rider (17 GNs)
+    Axe of the Sky Rider (17 GNs)
+    Bow of the Sky Rider (17 GNs)
+    Club of the Sky Rider (17 GNs)
+    Wand of the Sky Rider (17 GNs)
+    Sharanga (95 GNs)
+    Parashu (95 GNs)
+    Nandaka (95 GNs)
+    Kaladanda (95 GNs).
+     Rose Shield (3 GNs)
+    Tusk Shield (3 GNs)
+    Shield of Honour (3 GNs)
+    Cyclip Shield (6 GNs)
+    Oceanic Lizard Shield (17 GNs)
+    Shield of the Sky Rider (45 GNs).
+     Zeniths Ring (3 GNs)
+    Ring of the Phantom (8 GNs)
+    Rotating Black Potatoe Ring (15 GNs)
+    Ring of the Bonesmen (25 GNs)
+    Joy Ring (65 GNs)
+    Red Ruby Ring of the Gods (260 GNs)
+    Baphomets Emerald Red Ruby Wristband (800 GNs).
+     Black Obsidian Tool (10 GNs)
+    Cyclip Balls (55 GNs)
+    The Roc Head (250 GNs)
+    The Space Stick (400 GNs)
+    Cyclips Ball Slicer (800 GNs).
+     Exp Boost 3 (3 GNs)
+    Exp Boost 4 (10 GNs).
+     Fire Mushroom (1 GN)
+    The Rune of Almighty Abilities (3 GNs)
+    Piggy Bank Dice (6 GNs)
+    Amulet of Infinity (3 GNs).*@

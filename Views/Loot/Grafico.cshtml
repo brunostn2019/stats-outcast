@@ -7,7 +7,9 @@
 
 @section Scripts{
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
 
     <script type="text/javascript">
 
@@ -39,8 +41,9 @@ chart.render();
     </script>
 }
 
-
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.dataTables.min.css">
 
 <div class="row">
 
@@ -100,7 +103,7 @@ chart.render();
 
 
                                     @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                    <td><a asp-action="Boss" asp-controller="loot">@item.Item</a></td>
+                                    <td>@item.Item</td>
 
                                     <td>@item.Quantidade</td>
                                 </tr>
@@ -157,7 +160,7 @@ chart.render();
                     foreach (var item in Model.Take(14).ToList())
                     {
                         Int32 porcentagem = Convert.ToInt32((item.Quantidade * 100) / @Model.Take(14).Last().Quantidade);
-                        string cor = item.Quantidade > cores.Count ? cores.Last() : cores[item.Quantidade];
+                        string cor = item.Quantidade >= cores.Count ? cores.Last() : cores[item.Quantidade];
 
                         <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
                             @item.Item <span class="float-right">@item.Quantidade </span>

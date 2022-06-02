@@ -3,21 +3,21 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-   var tabela= $('#tabelaLoot').DataTable({
-        
+    var tabela = $('#tabelaLoot').DataTable({
+
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['nosort']
-        }],        
+        }],
         "order": [],
         "processing": true,
         "orderClasses": false,
         "oLanguage": {
-            
+
         }
     });
 
-  
+
 });
 
 $(document).ready(function () {
@@ -26,14 +26,14 @@ $(document).ready(function () {
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['nosort']
-        }],        
+        }],
         "order": [],
         "processing": true,
         "oLanguage": {
-            'sLoadingRecords': '<img src="~/Content/Stalker.gif">'
+         
         }
     });
-   
+
 });
 
 $(document).ready(function () {
@@ -42,11 +42,11 @@ $(document).ready(function () {
         'aoColumnDefs': [{
             'bSortable': false,
             'aTargets': ['nosort']
-        }],        
+        }],
         "order": [],
         "processing": true
     });
-   
+
 });
 
 
@@ -90,6 +90,13 @@ $(document).ready(function () {
     });
 
 });
+
+
+$(document).ready(function () {
+
+   
+}
+);
 
 
 

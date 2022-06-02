@@ -113,7 +113,7 @@ namespace StatsOutcast
                 SQLiteDataReader sqlite_datareader;
                 SQLiteCommand sqlite_cmd;
                 sqlite_cmd = sqlite_conn.CreateCommand();
-                sqlite_cmd.CommandText = "SELECT DISTINCT nome,level, data,id FROM PlayersLevelLog WHERE nome = @Nome order by id";
+                sqlite_cmd.CommandText = "SELECT DISTINCT nome,level, data,id FROM PlayersLevelLog WHERE nome = @Nome order by id desc";
                 //sqlite_cmd.CommandText = "SELECT Item, Boss, Data, Count(Item) qtd FROM LootLog2 where Boss=@BOSS AND Ativo=1 group by Item";
 
                 sqlite_conn.Open();
@@ -121,15 +121,21 @@ namespace StatsOutcast
                 decimal levelDif = 0;
                 decimal dataDif = 0;
                 sqlite_datareader = sqlite_cmd.ExecuteReader();
-                if (sqlite_datareader.Read())
+                Dictionary<DateTime, decimal> dic = new Dictionary<DateTime, decimal>();
+                while (sqlite_datareader.Read())
                 {
-
                     Decimal levelAntigo = Decimal.Parse(sqlite_datareader["level"].ToString());
-                    levelDif = player.Level - levelAntigo;
+                   
                     DateTime dataAntiga = DateTime.ParseExact(sqlite_datareader["data"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    dataDif = (DateTime.Now - dataAntiga).Days;
+                  
+                    if(!dic.ContainsKey(dataAntiga))
+                    dic.Add(dataAntiga, levelAntigo);
                 }
                 sqlite_conn.Close();
+                var itemDic = dic.Where(a => a.Key < DateTime.Now.AddDays(-7)).FirstOrDefault();
+                levelDif = player.Level - itemDic.Value;
+                dataDif = (DateTime.Now - itemDic.Key).Days;
+
                 if (levelDif > 0 && dataDif > 0)
                     return levelDif / dataDif;
                 else
@@ -179,7 +185,7 @@ namespace StatsOutcast
         }
 
         private static SQLiteConnection sqlite_conn;
-        public static void Configurar()
+        public static void ConfigurarLoot()
         {
             try
             {
@@ -188,6 +194,30 @@ namespace StatsOutcast
                 //CreateTable(sqlite_conn);
                 //int teste =BuscarQuantidadePorItem("The Roc Head");
                 ProcessarLootPage("https://outcastserver.com/loot.php");
+
+                //ProcessarLevelPage1("https://outcastserver.com/ranks.php?lvl");
+                //ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=1");
+                //ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=2");
+                //ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=3");
+
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+
+            //ReadData(sqlite_conn);
+        }
+        public static void ConfigurarPlayers()
+        {
+            try
+            {
+
+                sqlite_conn = CreateConnection();
+                //CreateTable(sqlite_conn);
+                //int teste =BuscarQuantidadePorItem("The Roc Head");
+                //ProcessarLootPage("https://outcastserver.com/loot.php");
 
                 ProcessarLevelPage1("https://outcastserver.com/ranks.php?lvl");
                 ProcessarLevelPage2("https://outcastserver.com/ranks.php?lvl&site=1");
@@ -509,8 +539,9 @@ namespace StatsOutcast
                     string data = arrayMortes[1].Split("Killed")[0].Substring(0, 10);
                     DateTime da = new DateTime(Convert.ToInt32(data.Substring(0, 4)), Convert.ToInt32(data.Substring(5, 2)), Convert.ToInt32(data.Substring(8, 2)));
                     int level = Convert.ToInt32(arrayMortes[1].Split(" by ")[0].Split(new string[] { "level" }, StringSplitOptions.None).Last().Trim());
-                    InsertPlayerLog(da.ToString("dd/MM/yyyy"), level, player.Nome);
+                    //InsertPlayerLog(da.ToString("dd/MM/yyyy"), level, player.Nome);
                 }
+                InsertPlayerLog(DateTime.Now.ToString("dd/MM/yyyy"), player.Level, player.Nome);
 
                 // divContent = divContent.Replace("\r", " ");
                 //  divContent = divContent.Replace("\n", " ");
