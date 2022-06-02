@@ -39,9 +39,10 @@ namespace StatsOutcast
                 while (sqlite_datareader.Read())
                 {
                     LootModel loot = new LootModel();
-
+                    DateTime data;
                     loot.Item = sqlite_datareader["Item"].ToString();
-                    loot.Data = DateTime.ParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
+                    var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out data);
+                    loot.Data = data;
                     loot.Boss = sqlite_datareader["boss"].ToString();
                     loot.Quantidade = Int32.Parse(sqlite_datareader["qtd"].ToString());
                     loots.Add(loot);
@@ -650,9 +651,10 @@ namespace StatsOutcast
                 while (sqlite_datareader.Read())
                 {
                     LootModel loot = new LootModel();
-
+                    DateTime data;
                     loot.Item = sqlite_datareader["Item"].ToString();
-                    loot.Data = DateTime.ParseExact(sqlite_datareader["data"].ToString(),"yyyy/MM/dd HH:mm", CultureInfo.InvariantCulture);
+                    var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(),"yyyy/MM/dd", CultureInfo.InvariantCulture,DateTimeStyles.AdjustToUniversal,out data);
+                    loot.Data = data;
                     loot.Boss = sqlite_datareader["boss"].ToString();
                     loots.Add(loot);
                 }
