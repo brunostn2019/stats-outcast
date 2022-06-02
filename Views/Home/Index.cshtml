@@ -388,68 +388,7 @@
 
 
         </div>
-        <div class="row">
-            <div class="col-xl-12 col-lg-12">
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Players Top level</h6>
-
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-
-
-                        <table id="tabelaPlayerTop" class="table table-bordered table-hover display compact">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Name</th>
-                                    <th>Level</th>
-                                    <th class="desktop">Magic Level</th>
-                                    <th class="desktop">Vocation</th>
-                                    <th class="desktop">Guild</th>
-                                    <th class="desktop">Gender</th>
-                                    <th class="desktop">Age</th>
-                                    <th>Lvls/day</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-
-                                @{
-
-                                    foreach (var item in Model.Players)
-                                    {
-                                        <tr>
-
-
-                                            @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
-                                            <td>@item.Rank</td>
-                                            <td>@item.Nome</td>
-                                            <td>@item.Level</td>
-                                            <td>@item.MagicLevel</td>
-                                            <td>@item.Vocation</td>
-                                            <td>@item.Guild</td>
-                                            <td>@item.Gender</td>
-                                            <td>@item.Age</td>
-                                            <td>@item.LevelPerDayAvg.ToString("0.0")</td>
-
-                                        </tr>
-
-                                    }
-                                }
-
-                            </tbody>
-                            <tfoot>
-
-                            </tfoot>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+    
     </div>
     <!-- /.container-fluid -->
 </div>

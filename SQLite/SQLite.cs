@@ -653,7 +653,7 @@ namespace StatsOutcast
                     LootModel loot = new LootModel();
                     DateTime data;
                     loot.Item = sqlite_datareader["Item"].ToString();
-                    var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(),"yyyy/MM/dd", CultureInfo.InvariantCulture,DateTimeStyles.AdjustToUniversal,out data);
+                    var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(),"dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture,DateTimeStyles.AdjustToUniversal,out data);
                     loot.Data = data;
                     loot.Boss = sqlite_datareader["boss"].ToString();
                     loots.Add(loot);

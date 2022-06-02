@@ -27,9 +27,9 @@ namespace StatsOutcast.BLL
         private ListasModel CalculaMedias(ListasModel Listas)
         {
             int resultado;
-           var teste = Int32.TryParse((Listas.Loots.Count /(int)(Listas.Loots.First().Data - Listas.Loots.Last().Data).TotalDays).ToString(),out resultado);
+            var teste = Int32.TryParse((Listas.Loots.Count / (int)(Listas.Loots.First().Data - Listas.Loots.Last().Data).TotalDays).ToString(), out resultado);
             Listas.QuantidadePorDia = resultado;
-           Listas.QuantidadePorMes = Listas.QuantidadePorDia * 30;
+            Listas.QuantidadePorMes = Listas.QuantidadePorDia * 30;
             Listas.QuantidadePorAno = Listas.QuantidadePorDia * 365;
             return Listas;
         }

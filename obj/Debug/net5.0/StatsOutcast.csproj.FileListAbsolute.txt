@@ -334,3 +334,4 @@ E:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.pdb
 E:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.genruntimeconfig.cache
 E:\dev\StatsOutcast\obj\Debug\net5.0\Razor\Views\Player\Index.cshtml.g.cs
 E:\dev\StatsOutcast\obj\Debug\net5.0\Razor\Views\Shared\_BusyIndicatorPartial.cshtml.g.cs
+E:\dev\StatsOutcast\bin\Debug\net5.0\database.db
