@@ -109,9 +109,14 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-
-                    <a id="refreshLootbtn" class="btn-primary btn" asp-controller="Home" asp-action="AtualizarLoot">Update Loot Info</a>
-                    <a id="refreshPlayerbtn" class="btn-secondary btn" asp-controller="Player" asp-action="AtualizarPlayer">Update Player Info</a>
+                    <div>
+                        <li class="nav-item">
+                            <i class="fas fa-fw fa-table"></i>
+                            <span>Test Version - open in desktop</span>
+                        </li>                        
+                    </div>
+                    @*<a id="refreshLootbtn" class="btn-primary btn" asp-controller="Home" asp-action="AtualizarLoot">Update Loot Info</a>
+                    <a id="refreshPlayerbtn" class="btn-secondary btn" asp-controller="Player" asp-action="AtualizarPlayer">Update Player Info</a>*@
 
 
                 </nav>
@@ -131,7 +136,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        &copy; 2022 - StatsOutcast - <a asp-area="" asp-controller="Home" asp-action="Privacy">Made by Mel</a>
+                        &copy; 2022 - StatsOutcast - <a href="https://outcastserver.com/characters.php?char=mel" target="_blank">Made by Mel</a>
                     </div>
                 </div>
             </footer>

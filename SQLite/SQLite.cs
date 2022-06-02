@@ -518,6 +518,7 @@ namespace StatsOutcast
                 string mortes = divContent.Split(new string[] { "Deaths" }, StringSplitOptions.None).Last();
                 var linhas = divContent.Split("\n");
                 player.MagicLevel = Convert.ToInt32(linhas[2].Split(new string[] { "Magic Level:" }, StringSplitOptions.None).Last());
+                player.Level = Convert.ToInt32(linhas[1].Split(new string[] { "Level:" }, StringSplitOptions.None).Last());
 
                 if (linhas[7].Contains("Age"))
                 {
