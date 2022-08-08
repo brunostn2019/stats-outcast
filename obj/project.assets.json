@@ -8457,11 +8457,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\dev\\StatsOutcast\\StatsOutcast.csproj",
+      "projectUniqueName": "C:\\dev\\StatsOutcast\\StatsOutcast.csproj",
       "projectName": "StatsOutcast",
-      "projectPath": "E:\\dev\\StatsOutcast\\StatsOutcast.csproj",
+      "projectPath": "C:\\dev\\StatsOutcast\\StatsOutcast.csproj",
       "packagesPath": "C:\\Users\\ssd\\.nuget\\packages\\",
-      "outputPath": "E:\\dev\\StatsOutcast\\obj\\",
+      "outputPath": "C:\\dev\\StatsOutcast\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ssd\\AppData\\Roaming\\NuGet\\NuGet.Config",

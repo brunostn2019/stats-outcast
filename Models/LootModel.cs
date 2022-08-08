@@ -10,12 +10,17 @@ namespace StatsOutcast.Models
     public class LootModel
     {
         public DateTime Data { get; set; }
-        public String Boss { get; set; }
+        //public String Bos { get; set; }
         [DataMember(Name = "label")]
         public String Item { get; set; }
         public String LootCompleto { get; set; }
         [DataMember(Name = "y")]
         public int Quantidade { get; set; }
-       
+        public BossModel Boss { get; set; }
+
+        public LootModel()
+        {
+            Boss = new BossModel();
+        }
     }
 }

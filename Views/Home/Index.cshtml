@@ -169,7 +169,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Last 1000 loots</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Last 5000 loots</h6>
 
                     </div>
                     <!-- Card Body -->
@@ -187,15 +187,15 @@
                                 <tbody>
 
                                     @{
-                                        int contador = 1000;
-                                        foreach (var item in Model.Loots.Take(1000))
+                                        int contador = 5000;
+                                        foreach (var item in Model.Loots.Take(5000))
                                         {
                                             <tr>
                                                 <td>@contador</td>
                                                 <td>@item.Data</td>
                                                 @*<td><a class="page-link" onclick="Modal();" href="#">@item.Item</a></td>*@
                                                 <td>@item.Item</td>
-                                                <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.Boss">@item.Boss</a></td>
+                                                <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.Boss.NomeBoss">@item.Boss.NomeBoss</a></td>
 
                                             </tr>
                                             contador--;

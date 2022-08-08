@@ -43,13 +43,56 @@ namespace StatsOutcast
                     loot.Item = sqlite_datareader["Item"].ToString();
                     var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out data);
                     loot.Data = data;
-                    loot.Boss = sqlite_datareader["boss"].ToString();
+                    loot.Boss = BuscarDadosBoss(sqlite_datareader["boss"].ToString());
                     loot.Quantidade = Int32.Parse(sqlite_datareader["qtd"].ToString());
                     loots.Add(loot);
                 }
                 sqlite_conn.Close();
                 loots = loots.OrderByDescending(a => a.Data).ToList();
                 return loots;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
+        internal static BossModel BuscarDadosBoss(string nomeBoss)
+        {
+            try
+            {
+
+
+                BossModel boss = new BossModel();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Lvl,Hp,Xp,Magic FROM Monsters where Nome=@BOSS";
+
+                sqlite_conn.Open();
+                sqlite_cmd.Parameters.AddWithValue("BOSS", nomeBoss);
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                if (sqlite_datareader.Read())
+                {
+
+
+                    boss.NomeBoss = nomeBoss;
+                    boss.Lvl = Int32.Parse(sqlite_datareader["Lvl"].ToString());
+                    boss.Xp = Int32.Parse(sqlite_datareader["Xp"].ToString());
+                    boss.Hp = Int32.Parse(sqlite_datareader["Hp"].ToString()); ;
+                    boss.Magic = Int32.Parse(sqlite_datareader["MAgic"].ToString()); ;
+                    //boss.XpPorHP = boss.Xp / boss.Hp;
+                   // var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out data);
+
+                }
+                sqlite_conn.Close();
+              
+                return boss;
             }
             catch (Exception e)
             {
@@ -360,12 +403,7 @@ namespace StatsOutcast
             foreach (var item in listaPlayers)
             {
                 int result = InsertPlayer(sqlite_conn, item.Data.ToString("dd/MM/yyyy"), item);
-            }
-
-            /*
-             insert into Players (nome,level,ativo,dataAtualizacao) VALUES
-('Mel',1800,1,'03/05/2022')
-             */
+            }       
         }
 
         public static SQLiteConnection CreateConnection()
@@ -496,7 +534,7 @@ namespace StatsOutcast
             {
                 LootModel loot = new LootModel();
                 loot.Data = DateTime.ParseExact(sqlite_datareader["Data"].ToString(), "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-                loot.Boss = sqlite_datareader["Boss"].ToString();
+                loot.Boss.NomeBoss = sqlite_datareader["Boss"].ToString();
                 loot.Item = sqlite_datareader["Item"].ToString();
                 loot.LootCompleto = sqlite_datareader["LootCompleto"].ToString();
 
@@ -656,7 +694,7 @@ namespace StatsOutcast
                     loot.Item = sqlite_datareader["Item"].ToString();
                     var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(),"dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture,DateTimeStyles.AdjustToUniversal,out data);
                     loot.Data = data;
-                    loot.Boss = sqlite_datareader["boss"].ToString();
+                    loot.Boss.NomeBoss = sqlite_datareader["boss"].ToString();
                     loots.Add(loot);
                 }
                 sqlite_conn.Close();

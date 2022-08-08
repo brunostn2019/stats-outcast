@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sPFhUBgkUt5SxAyWwY0CKg3F5hflahProjIxqJzQCAX7MbTdWkEe8BGJID5U+ARtqC2gIQFwsEG26p45tUi2ag==",
+  "dgSpecHash": "qmzmCr/irVsngFHNOa5Cy6qgMn0fDkr+9GDzIkC84+y30G/Od1xTKQ8RBr/xKPigTa7X8mFhm99cqJPgCMPKew==",
   "success": true,
-  "projectFilePath": "E:\\dev\\StatsOutcast\\StatsOutcast.csproj",
+  "projectFilePath": "C:\\dev\\StatsOutcast\\StatsOutcast.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ssd\\.nuget\\packages\\chartjs\\21.2.6\\chartjs.21.2.6.nupkg.sha512",
     "C:\\Users\\ssd\\.nuget\\packages\\cldrjs\\0.4.4\\cldrjs.0.4.4.nupkg.sha512",

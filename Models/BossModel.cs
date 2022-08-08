@@ -9,6 +9,12 @@ namespace StatsOutcast.Models
     {
         public string NomeBoss { get; set; }
         public int QuantidadeLoots { get; set; } 
+        public double Hp { get; set; } 
+        public double Xp { get; set; } 
+        public int Magic { get; set; } 
+        public int Lvl { get; set; } 
+        public string XpPorHP { get { return (Xp / Hp).ToString("#.##"); } } 
+
 
     }
 }
