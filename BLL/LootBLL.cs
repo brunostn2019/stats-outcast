@@ -24,6 +24,10 @@ namespace StatsOutcast.BLL
             return Listas;
         }
 
+        internal List<BossModel> BuscarMonsterStats()
+        {
+            return SQLite.BuscarMonsterStats();
+        }
         private ListasModel CalculaMedias(ListasModel Listas)
         {
             int resultado;

@@ -58,6 +58,47 @@ namespace StatsOutcast
             }
         }
 
+        internal static List<BossModel> BuscarMonsterStats()
+        {
+            try
+            {
+
+
+                List<BossModel> bosses = new List<BossModel>();
+
+                sqlite_conn = CreateConnection();
+
+                SQLiteDataReader sqlite_datareader;
+                SQLiteCommand sqlite_cmd;
+                sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_cmd.CommandText = "SELECT Nome,Lvl,Hp,Xp,Magic FROM Monsters";
+
+                sqlite_conn.Open();
+              
+
+                sqlite_datareader = sqlite_cmd.ExecuteReader();
+                while (sqlite_datareader.Read())
+                {
+
+                    BossModel boss = new BossModel();
+                    boss.NomeBoss = sqlite_datareader["Nome"].ToString();
+                    boss.Lvl = Int32.Parse(sqlite_datareader["Lvl"].ToString());
+                    boss.Xp = Int32.Parse(sqlite_datareader["Xp"].ToString());
+                    boss.Hp = Int32.Parse(sqlite_datareader["Hp"].ToString()); ;
+                    boss.Magic = Int32.Parse(sqlite_datareader["Magic"].ToString());
+                    bosses.Add(boss);               
+                }
+                sqlite_conn.Close();
+
+                return bosses;
+            }
+            catch (Exception e)
+            {
+
+                throw new InvalidOperationException(e.Message);
+            }
+        }
+
         internal static BossModel BuscarDadosBoss(string nomeBoss)
         {
             try
@@ -85,7 +126,7 @@ namespace StatsOutcast
                     boss.Lvl = Int32.Parse(sqlite_datareader["Lvl"].ToString());
                     boss.Xp = Int32.Parse(sqlite_datareader["Xp"].ToString());
                     boss.Hp = Int32.Parse(sqlite_datareader["Hp"].ToString()); ;
-                    boss.Magic = Int32.Parse(sqlite_datareader["MAgic"].ToString()); ;
+                    boss.Magic = Int32.Parse(sqlite_datareader["Magic"].ToString()); 
                     //boss.XpPorHP = boss.Xp / boss.Hp;
                    // var teste = DateTime.TryParseExact(sqlite_datareader["data"].ToString(), "yyyy/MM/dd", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out data);
 

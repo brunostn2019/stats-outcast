@@ -1,0 +1,210 @@
+﻿@model List<BossModel>
+@{
+    ViewData["Title"] = "Monsters Page";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.6/css/colReorder.dataTables.css">
+
+<div class="text-center">
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Outcast Server Stats</h1>
+
+        </div>
+
+   
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Monster Stats</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+
+                        <table id="tabelaMonsters" class="table table-bordered table-hover display compact">
+                            <thead>
+                                <tr>                                   
+                                    <th>Name</th>
+                                    <th>Level</th>
+                                    <th>Magic Level</th>
+                                    <th>Base XP</th>
+                                    <th>HP</th>
+                                    <th>XP/HP</th>                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                                                <tr>
+                                                                    <td><a asp-action="Grafico" asp-controller="loot" asp-route-bossName="@item.NomeBoss">@item.NomeBoss</a></td>
+                                                                 
+                                                                    <td>@item.Lvl</td>
+                                                                    <td>@item.Magic</td>
+                                                                    <td>@item.Xp</td>
+                                                                    <td>@item.Hp</td>
+                                                                    <td>@item.XpPorHP</td>
+                                                                </tr>
+
+                                    }
+                                }
+
+                            </tbody>
+                            <tfoot>
+
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>
+
+
+
+
+@section Scripts{
+    <!-- JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/colreorder/1.5.6/js/dataTables.colReorder.js"></script>
+    <script>
+
+
+
+    </script>
+}
+
+
+
+@*Helmet of the Dark Warrior (1.5 GNs)
+    Zeniths Helmet (3 GNs)
+    Templar Helm (3 GNs)
+    Draconian Visage (3.5 GNs)
+    Helmet of the Fallen Gods (4 GNs)
+    Helarctos Head (5.5 GNs)
+    Hood of the Dark Overlord (6.5 GNs)
+    Cyclip Helmet (8 GNs)
+    Mask of the Craak Slayer (11 GNs)
+    Oceanic Lizard Head (10 GNs)
+    Marianas Helmet (75 GNs)
+    Craaktrons Helmet (125 GNs)
+    Helmet of the Sky Rider (350 GNs)
+    Red Scorcher Hat (550 GNs)
+    Hoodoo Hat (750 GNs)
+    Neptune Helmet (1000 GNs).
+     Armor of the Dark Warrior (1.5 GNs)
+    Zeniths Armor (3 GNs)
+    Templar Harness (3 GNs)
+    Scales of the Draconian Lord (3.5 GNs)
+    Armor of the Fallen Gods (4 GNs)
+    Helarctos Body (5.5 GNs)
+    Body Armor of the Dark Overlord (6.5 GNs)
+    Cyclip Armor (8 GNs)
+    Cyclip Robe (8 GNs)
+    Titanium Body of the Craak Slayer (11 GNs)
+    Oceanic Lizard Body (10 GNs)
+    Marianas Armor (75 GNs)
+    Craaktrons Armor (125 GNs)
+    Armor of the Sky Rider (350 GNs)
+    Red Scorcher Cape (550 GNs)
+    Hoodoo Suit (750 GNs)
+    Neptune Armor (1000 GNs).
+     Legs of the Dark Warrior (1.5 GNs)
+    Zeniths Skirt (3 GNs)
+    Templar Trousers (3 GNs)
+    Draconian Legs of Fortitude (3.5 GNs)
+    Legs of the Fallen Gods (4 GNs)
+    Helarctos Legs (5.5 GNs)
+    Saggy Pants of the Dark Overlord (6.5 GNs)
+    Cyclip Legs (8 GNs)
+    Titanium Craak Legs (11 GNs)
+    Oceanic Lizard Legs (4 GNs)
+    Marianas Legs (75 GNs)
+    Craaktrons Legs (125 GNs)
+    Legs of the Sky Rider (350 GNs)
+    Red Scorcher Legs (550 GNs)
+    Hoodoo Pants (750 GNs)
+    Neptune Legs (1000 GNs).
+     Boots of the Dark Warrior (1.5 GNs)
+    Zeniths Boots (3 GNs)
+    Templar Clodhoppers (3 GNs)
+    Draconian Shackles (3.5 GNs)
+    Boots of the Fallen Gods (4 GNs)
+    Helarctos Feet (5.5 GNs)
+    Light Boots of the Dark Overlord (6.5 GNs)
+    Cyclip Boots (8 GNs)
+    Titanium Craak Boots (11 GNs)
+    Oceanic Lizard Boots (10 GNs)
+    Marianas Boots (75 GNs)
+    Craaktrons Boots (125 GNs)
+    Shoes of the Sky Rider (350 GNs)
+    Red Scorcher Boots (550 GNs)
+    Hoodoo Shoes (750 GNs)
+    Neptune Boots (1000 GNs).
+     Endymions Wand (3 GNs)
+    Staff of the Archmage (3 GNs)
+    Golden Spear (3 GNs)
+    Axe of Phoenix (3 GNs)
+    Slaughterers Axe (3 GNs)
+    Twin Axe (3 GNs)
+    Moralltach (3 GNs)
+    Djinn Blade (3 GNs)
+    The Executor (3 GNs)
+    Thors Hammer (3 GNs)
+    Mace of Fury (3 GNs)
+    Aethers Wand (4 GNs)
+    Aratrons Wand (4 GNs)
+    Club of the Oceanic Lizard (6 GNs)
+    Axe of the Oceanic Lizard (6 GNs)
+    Sword of the Oceanic Lizard (6 GNs)
+    Spear of the Oceanic Lizard (6 GNs)
+    Wand of the Oceanic Lizard (6 GNs)
+    Sword of the Sky Rider (17 GNs)
+    Axe of the Sky Rider (17 GNs)
+    Bow of the Sky Rider (17 GNs)
+    Club of the Sky Rider (17 GNs)
+    Wand of the Sky Rider (17 GNs)
+    Sharanga (95 GNs)
+    Parashu (95 GNs)
+    Nandaka (95 GNs)
+    Kaladanda (95 GNs).
+     Rose Shield (3 GNs)
+    Tusk Shield (3 GNs)
+    Shield of Honour (3 GNs)
+    Cyclip Shield (6 GNs)
+    Oceanic Lizard Shield (17 GNs)
+    Shield of the Sky Rider (45 GNs).
+     Zeniths Ring (3 GNs)
+    Ring of the Phantom (8 GNs)
+    Rotating Black Potatoe Ring (15 GNs)
+    Ring of the Bonesmen (25 GNs)
+    Joy Ring (65 GNs)
+    Red Ruby Ring of the Gods (260 GNs)
+    Baphomets Emerald Red Ruby Wristband (800 GNs).
+     Black Obsidian Tool (10 GNs)
+    Cyclip Balls (55 GNs)
+    The Roc Head (250 GNs)
+    The Space Stick (400 GNs)
+    Cyclips Ball Slicer (800 GNs).
+     Exp Boost 3 (3 GNs)
+    Exp Boost 4 (10 GNs).
+     Fire Mushroom (1 GN)
+    The Rune of Almighty Abilities (3 GNs)
+    Piggy Bank Dice (6 GNs)
+    Amulet of Infinity (3 GNs).*@

@@ -32,7 +32,7 @@ namespace StatsOutcast
         {
             
                 app.UseDeveloperExceptionPage();
-
+            app.UseExceptionHandler("/Error");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

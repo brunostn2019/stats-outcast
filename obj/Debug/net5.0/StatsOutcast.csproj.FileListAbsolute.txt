@@ -505,3 +505,4 @@ C:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.Views.pdb
 C:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.csproj.CopyComplete
 C:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.genruntimeconfig.cache
 C:\dev\StatsOutcast\obj\Debug\net5.0\StatsOutcast.csproj.AssemblyReference.cache
+C:\dev\StatsOutcast\obj\Debug\net5.0\Razor\Views\Monster\Index.cshtml.g.cs

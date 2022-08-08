@@ -91,6 +91,18 @@ $(document).ready(function () {
 
 });
 
+$(document).ready(function () {
+    $('#tabelaMonsters').DataTable({
+        "pageLength": 100,
+        'aoColumnDefs': [{
+            'bSortable': false,
+            'aTargets': ['nosort']
+        }],
+        "order": [],
+        "processing": true
+    });
+
+});
 
 $(document).ready(function () {
 

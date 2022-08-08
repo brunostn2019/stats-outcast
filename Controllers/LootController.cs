@@ -22,8 +22,10 @@ namespace StatsOutcast.Controllers
             List<LootModel> loots = _bll.BuscarLootsPorBoss(bossName);
 
             loots = loots.OrderBy(s => s.Quantidade).ToList();
-         
-            return View(loots);
+            if (loots.Count > 0)
+                return View(loots);
+            else
+                return View("Error");
         }
       
     }
