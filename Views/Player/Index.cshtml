@@ -185,9 +185,61 @@
 
         </div>
 
+       
+
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+
+                <!-- Project Card Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Vocation Popularity in top 200</h6>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                Knights <span class="float-right">   @Model.Players.Where(a => a.Vocation.Contains("Knight")).Count() </span>
+                            </h4>
+                            <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                <div class="progress-bar" role="progressbar" style="background-color: lawngreen; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @Model.Players.Where(a => a.Vocation.Contains("Knight")).Count()%; "
+                                     aria-valuenow="@Model.Players.Where(a => a.Vocation.Contains("Knight")).Count()" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                Paladins <span class="float-right">   @Model.Players.Where(a => a.Vocation.Contains("Paladin")).Count() </span>
+                            </h4>
+                            <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                <div class="progress-bar" role="progressbar" style="background-color:yellow; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @Model.Players.Where(a => a.Vocation.Contains("Paladin")).Count()%; "
+                                     aria-valuenow="@Model.Players.Where(a => a.Vocation.Contains("Paladin")).Count()" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                            <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                Druids <span class="float-right">   @Model.Players.Where(a => a.Vocation.Contains("Druid")).Count() </span>
+                            </h4>
+                            <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                <div class="progress-bar" role="progressbar" style="background-color: orange; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @Model.Players.Where(a => a.Vocation.Contains("Druid")).Count()%; "
+                                     aria-valuenow="@Model.Players.Where(a => a.Vocation.Contains("Druid")).Count()" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <h4 class="small font-weight-bold" style="margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                Sorcerers <span class="float-right">   @Model.Players.Where(a => a.Vocation.Contains("Sorcerer")).Count() </span>
+                            </h4>
+                            <div class="progress mb-4" style="height: 10px; margin: 1px 2px 1px 2px !important; padding: 0 0 0 0">
+                                <div class="progress-bar" role="progressbar" style="background-color: red; padding: 0 0 0 0; margin: 1px 2px 1px 2px !important; width: @Model.Players.Where(a => a.Vocation.Contains("Sorcerer")).Count()%; "
+                                     aria-valuenow="@Model.Players.Where(a => a.Vocation.Contains("Sorcerer")).Count()" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
 
 
 
+                        }
+
+
+                    </div>
+                </div>
+
+                <!-- Color System -->
+
+
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xl-12 col-lg-12">
